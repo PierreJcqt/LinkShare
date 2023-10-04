@@ -28,7 +28,7 @@
             @click="changeOrReloadPage('Profile')"
             aria-label="Voir mon profil"
           >
-            <b-icon icon="person" class="mr-2"></b-icon>Paramètres du profil
+            <b-icon icon="person" class="mr-2 icon"></b-icon>Paramètres du profil
           </button>
         </p>
         <p class="card-text">
@@ -37,7 +37,7 @@
             @click="changeOrReloadPage('Posts')"
             aria-label="Voir la page d'accueil"
           >
-            <b-icon icon="house" class="mr-2"></b-icon>Page d'accueil
+            <b-icon icon="house" class="mr-2 icon"></b-icon>Page d'accueil
           </button>
         </p>
         <p class="card-text">
@@ -46,7 +46,7 @@
             @click="logout"
             aria-label="Se déconnecter"
           >
-            <b-icon icon="box-arrow-right" class="mr-2"></b-icon>
+            <b-icon icon="box-arrow-right" class="mr-2 icon"></b-icon>
             Se déconnecter
           </button>
         </p>
@@ -132,6 +132,9 @@ export default {
     font-size: 125%;
     vertical-align: text-bottom;
   }
+}
+.icon {
+  margin-right: 10px;
 }
 .div-profile-btn-img {
   width: 30px;
