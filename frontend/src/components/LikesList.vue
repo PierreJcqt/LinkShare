@@ -101,6 +101,7 @@ a {
 }
 .likes-number {
   font-size: 14px;
+  margin-left: 5px;
 }
 @media screen and (min-width: 280px) and (max-width: 767px) {
   .modal-title {

@@ -96,7 +96,8 @@ export default {
           this.receivedKudos.splice(kudoIndex, 1);
           console.log('receivedKudos après suppression:', this.receivedKudos);
         }
-        this.displayNotification('Kudo supprimé avec succès')
+        // this.displayNotification('Kudo supprimé avec succès')
+        this.$toast.success('Kudo supprimé avec succès !');
       } catch (error) {
         console.error('Erreur lors de la suppression du kudo:', error);
         alert('Impossible de supprimer le kudo');
@@ -125,7 +126,8 @@ export default {
         const recipientName = this.users.find(user => user.id === recipient)?.name || '';
         await apiClient.post('/api/posts/kudos', body);
         this.newKudo = { recipient: '', message: '' };
-        this.displayNotification(`Kudo envoyé à ${recipientName}`);
+        // this.displayNotification(`Kudo envoyé à ${recipientName}`);
+        this.$toast.success(`Kudo envoyé à ${recipientName}`);
         this.kudosCount++; 
       } catch (error) {
         console.error('Erreur lors de l\'envoi du kudo:', error);

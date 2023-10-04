@@ -5,7 +5,7 @@
       >
         <div class="search-bar__content input-group d-flex align-items-center">
           <span class="search-btn input-group-append bg-transparent border-0 p-0">
-            <b-icon icon="search" class="mr-2"></b-icon>
+            <b-icon icon="search" class="mr-2 icon-search"></b-icon>
           </span>
           <!-- rajouter :list="usersList" dans vue-simple-siggest si besoin -->
           <vue-simple-suggest
@@ -181,7 +181,10 @@
     z-index: 1;
     box-shadow: 0px 1px 5px 4px rgba(204, 204, 204, 0.2);
   }
-
+  .icon-search {
+    margin-right: 10px;
+  }
+  
 
   @media screen and (min-width: 280px) and (max-width: 769px) {
     .search-bar {

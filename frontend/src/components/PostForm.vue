@@ -17,7 +17,7 @@
           id="content"
           :placeholder="`Que voulez-vous partager, ${userData.firstName} ?`"
           aria-label="Écrire une publication"
-          class="text-dark mb-2 mr-2 w-100"
+          class="text-dark mb-4 mr-2 w-100"
           @keydown.enter.prevent="onEnterKeyPress"
         ></b-form-textarea>
       </div>
@@ -30,14 +30,14 @@
     </b-form-group>
     <div class="line mb-3"></div>
     <b-form-group>
-      <div class="d-flex justify-content-around">
+      <div class="d-flex justify-content-around mb-4">
         <button
           class="d-flex align-items-center justify-content-center create-button btn-block"
           @click="triggerInput"
           type="button"
           aria-label="Choisir un fichier"
         >
-          <span class="mr-2 d-none d-md-block">Choisir un fichier</span>
+          <span class="mr-2 d-none d-md-block block-file">Choisir un fichier</span>
           <svg
             style="width:24px;height:24px;margin-bottom:5px"
             viewBox="0 0 24 24"
@@ -59,9 +59,9 @@
               type="submit"
               aria-label="Publier"
             >
-            <span class="mr-2 d-none d-md-block">Publier</span>
+            <span class="mr-2 d-none d-md-block block-file">Publier</span>
             <svg
-              style="width:24px;height:24px;margin-bottom:5px"
+              style="width:24px;height:24px;"
               viewBox="0 0 24 24"
             >
               <path
@@ -151,6 +151,12 @@ export default {
   width: 100%;
   height: 1px;
   background-color: rgba(192, 192, 192, 0.5);
+}
+.text-dark {
+  margin-left: 10px;
+}
+.block-file {
+  margin-right: 5px;
 }
 .create-button {
   background: white;

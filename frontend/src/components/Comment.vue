@@ -81,7 +81,8 @@ export default {
         `/api/posts/${this.post.id}/comments/${this.comment.id}`
       )
       this.$emit('commentDeleted', this.comment)
-      this.displayNotification('Commentaire supprimé !')
+      // this.displayNotification('Commentaire supprimé !')
+      this.$toast.success('Commentaire supprimée !');
     },
     startEditing () {
       this.isEditing = true
@@ -99,7 +100,8 @@ export default {
       )
       this.comment.updatedAt = res.comment.updatedAt
       this.isEditing = false
-      this.displayNotification('Commentaire modifié !')
+      // this.displayNotification('Commentaire modifié !')
+      this.$toast.success('Commentaire modifié !');
     }
   }
 }
@@ -122,7 +124,11 @@ export default {
 }
 .comment-date {
   margin-left: 58px;
+  margin-top: 5px;
   font-size: 0.8rem;
+}
+.comment-box {
+  margin-left: 10px;
 }
 @media screen and (min-width: 280px) and (max-width: 767px) {
   .comment-date {

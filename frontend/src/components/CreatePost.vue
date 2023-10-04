@@ -51,8 +51,8 @@ export default {
         selectedFile: this.selectedFile,
         content: this.content
       });
-      // socket.emit("newPost", newPost);
-      this.displayNotification('Publication créée !')
+      // this.displayNotification('Publication créée !')
+      this.$toast.success('Publication créée !');
       this.resetForm(event)
     },
     resetForm () {

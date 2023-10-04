@@ -9,7 +9,7 @@
             divCustomClass="div-comment-picture"
         /></router-link>
       </div>
-      <b-form class="w-100" @submit="createComment">
+      <b-form class="w-100 box-comment" @submit="createComment">
         <b-form-group>
           <b-form-textarea
             :id="`comment-area-${post.id}`"
@@ -66,6 +66,9 @@ export default {
 <style lang="scss">
 .comment-area {
   background-color: rgba(108, 117, 125, 0.1);
+}
+.box-comment {
+  margin-left: 10px;
 }
 .div-comment-picture {
   width: 45px;
