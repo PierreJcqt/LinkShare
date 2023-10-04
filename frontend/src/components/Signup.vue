@@ -60,7 +60,7 @@
 
             <p class="font-small grey-text d-flex justify-content-center mb-1">
               Vous avez déjà un compte ?
-              <router-link to="/login" class="font-weight-bold ml-1">
+              <router-link to="/login" class="font-weight-bold ml-1 box-text">
                 Se connecter</router-link>
             </p>
           </b-card>
@@ -137,6 +137,9 @@ export default {
 a {
   text-decoration: none;
   color: #2c3e50 !important;
+}
+.box-text {
+  margin-left: 5px;
 }
 .account-btn {
   background-color: rgba(253, 45, 6, 0.8);

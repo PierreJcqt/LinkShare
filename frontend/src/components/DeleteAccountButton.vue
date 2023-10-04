@@ -8,7 +8,7 @@
         <p @click="onDeleteAccount" class="my-3 mr-1 mr-lg-2">
           Supprimer le compte
         </p>
-        <b-icon icon="trash"></b-icon>
+        <b-icon class="icon-trash" icon="trash"></b-icon>
       </button>
     </div>
   </div>
@@ -45,5 +45,9 @@ export default {
   &:focus {
     outline: none;
   }
+}
+
+.icon-trash {
+  margin-left: 5px;
 }
 </style>

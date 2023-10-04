@@ -2,7 +2,7 @@
   <div class="fixed-top"> 
     <ProfileButton />
     <div class="btn-container-toggle">
-      <button class="btn btn-info toggle-button" @click="toggleComponent">Gérez vos Kudos</button> 
+      <button class="btn btn-light toggle-button" @click="toggleComponent">Gérez vos Kudos</button> 
     </div>
     <Notifications :kudos-count="kudosCount"/>
     <router-view :kudosCount="kudosCount" />
@@ -70,7 +70,13 @@ export default {
   border-radius: 40px;
   font-weight: 500;
   border: none;
-  color: #000;
+  color: black;
+  width: 150px;
+  margin-right: 10px;
+}
+
+.toggle-button:focus {
+    outline: none;
 }
 
 .btn-container-toggle {
@@ -100,5 +106,4 @@ export default {
   transform: translateY(-100%);
   opacity: 0;
 }
-
 </style>

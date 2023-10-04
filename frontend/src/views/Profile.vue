@@ -49,7 +49,7 @@
                 </b-col>
               </div>
               <div class="d-flex align-items-center">
-                <b-col sm="2" class="d-none d-lg-block p-0">
+                <b-col sm="2" class="d-none d-lg-block p-0 bloc">
                   <label for="firstName"> Prénom </label>
                 </b-col>
                 <b-col sm="10">
@@ -63,7 +63,7 @@
                 </b-col>
               </div>
               <div class="d-flex align-items-center">
-                <b-col sm="2" class="d-none d-lg-block p-0">
+                <b-col sm="2" class="d-none d-lg-block p-0 bloc">
                   <label for="lastName"> Nom </label>
                 </b-col>
                 <b-col sm="10">
@@ -77,7 +77,7 @@
                 </b-col>
               </div>
               <div class="d-flex align-items-center">
-                <b-col sm="2" class="d-none d-lg-block p-0">
+                <b-col sm="2" class="d-none d-lg-block p-0 bloc">
                   <label for="email"> Email </label>
                 </b-col>
                 <b-col sm="10">
@@ -86,7 +86,7 @@
                     type="email"
                     placeholder="Email"
                     v-model="input.email"
-                    class="mb-2 pl-lg-3"
+                    class="text-dark mb-2 pl-lg-3"
                     disabled
                   ></b-form-input>
                 </b-col>
@@ -108,7 +108,7 @@
             </b-form-group>
             <button
               type="submit"
-              :class="`save-btn ${emptyInput ? 'disabled' : ''}`"
+              :class="`save-btn bg-success mt-3 ${emptyInput ? 'disabled' : ''}`"
               :disabled="emptyInput"
               aria-label="Enregistrer"
             >
@@ -204,8 +204,14 @@ export default {
 .custom-file-label {
   text-align: left;
 }
+.bloc {
+  margin-top: -25px;
+}
+.text-dark  {
+  margin-left: -20px;
+}
 .save-btn {
-  background-color: rgba(253, 45, 6, 0.8);
+  // background-color: rgba(253, 45, 6, 0.8);
   color: white;
   border-radius: 1rem;
   border: none;

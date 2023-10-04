@@ -2,7 +2,7 @@
   <div>
     <button
       @click="toggleActions"
-      class="profile-btn d-flex position-fixed justify-content-center justify-content-lg-between align-items-center"
+      class="profile-btn d-flex btn-light position-fixed justify-content-center justify-content-lg-between align-items-center"
       aria-label="Afficher les actions"
       >
       <span class="name-profile-btn d-none d-lg-block">{{
@@ -94,6 +94,7 @@ export default {
 <style lang="scss">
 .profile-btn {
   font-weight: 500;
+  width: 100px;
   border: none;
   color: #000;
   top: 20px;

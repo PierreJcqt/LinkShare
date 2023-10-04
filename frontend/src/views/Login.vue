@@ -45,7 +45,7 @@
 
             <p class="font-small grey-text d-flex justify-content-center mb-1">
               Vous n'êtes pas encore inscrit ?
-              <router-link to="/signup" class="font-weight-bold ml-1"> Créer un compte </router-link>
+              <router-link to="/signup" class="font-weight-bold ml-3 router-box">Créer un compte</router-link>
             </p>
           </b-card>
         </b-col>
@@ -76,10 +76,11 @@ export default {
   },
   mounted () {
     if (this.$route.query.deletedAccount) {
-      this.$bvToast.toast('Votre compte a bien été supprimé', {
-        title: 'Notification',
-        autoHideDelay: 4000
-      })
+      this.$toast.success('Votre compte a bien été supprimé !');
+      // this.$bvToast.toast('Votre compte a bien été supprimé', {
+      //   title: 'Notification',
+      //   autoHideDelay: 4000
+      // })
     }
   },
 
@@ -157,13 +158,7 @@ methods: {
             this.errorMessage = 'Veuillez renseigner un email et un mot de passe';
         }
     }
-}
-
-
-
-
-
-
+  }
 }
 </script>
 
@@ -173,6 +168,13 @@ a {
   text-decoration: none;
   color: #2c3e50 !important;
 }
+.router-box {
+  margin-left: 5px;
+}
+// .btn-success {
+//   margin-left: 10px;
+//   margin-right: 10px;
+// }
 .line {
   display: block;
   width: 100%;
