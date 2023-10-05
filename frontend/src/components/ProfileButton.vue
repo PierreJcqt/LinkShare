@@ -149,8 +149,9 @@ export default {
 }
 @media screen and (min-width: 280px) and (max-width: 769px) {
   .profile-btn {
-    top: 20px;
+    top: 22px;
     right: 20px;
+    width: 35px;
     height: 25px;
     padding: 0;
     &__img {

@@ -231,11 +231,7 @@ textarea {
   cursor: pointer;
 }
 
-// .send-btn[type="submit"]:hover {
-//   background-color: #0056b3;
-// }
-
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 280px) and (max-width: 768px) {
   .kudos-component {
     margin: 2rem 1rem;
   }

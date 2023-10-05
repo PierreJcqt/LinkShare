@@ -7,7 +7,7 @@
       <router-link to="/">
         <img
           id="logo"
-          :src="require('./assets/Colorful_People_Group_Community_Logo-removebg-preview.png')"
+          :src="require('./assets/Colorful People Group Community Logo.png')"
           alt="logo MeetFirst"
         />
       </router-link>
@@ -36,7 +36,7 @@ export default {
   // -webkit-font-smoothing: antialiased;
   // -moz-osx-font-smoothing: grayscale;
   // text-align: center;
-  background: url(./assets/wallpaperbetter.com_3840x2160.jpg);
+  background: url(assets/fond-ecran-wallpaper-image-abstrait-bleu-06.jpg);
   background-size: cover;
   overflow: hidden;
 }

@@ -41,6 +41,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 .card-body {
   padding-bottom: 0;
 }

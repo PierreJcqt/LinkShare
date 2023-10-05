@@ -87,12 +87,12 @@ export default {
 }
 
 
-@media screen and (min-width: 280px) and (max-width: 769px) {
-  .btn-container {
-    .toggle-button {
-      top: 150px;
-      position: fixed;
-    }
+@media screen and (min-width: 280px) and (max-width: 580px) {
+  .btn-container-toggle  {
+    margin-top: 20px;
+    max-width: 100px;
+    width: 100px;
+    margin-left: 150px;
   }
 }
 
