@@ -1,241 +1,274 @@
 <template>
     <div class="kudos-component">
-      <h1>Kudos reçus :</h1>
-      <div v-if="isLoading">Chargement des données...</div>
-      <div v-else>
-        <ul v-if="receivedKudos.length > 0">
-          <li v-for="kudo in receivedKudos" :key="kudo.id" v-if="kudo">
-            <strong>{{ getSenderName(kudo.senderId) }}</strong> : {{ kudo.message }}
-            <button 
-            class="btn btn-danger btn-sm rounded-circle" 
-            data-toggle="tooltip" 
-            data-placement="top" 
-            title="Supprimer le kudo" 
-            @click="deleteKudo(kudo.id)">X</button>
-          </li>
-        </ul>
-        <p v-else>Pas de kudos reçus</p>
-      </div>
-      <h2>Envoyer un kudo :</h2>
-      <form @submit.prevent="sendKudo">
-        <label for="recipient">Destinataire :</label>
-        <select v-model="newKudo.recipient" id="recipient" name="recipient" required>
-          <option disabled value="">Sélectionnez un destinataire</option>
-          <option v-for="user in users" :key="user.id" :value="user.id" v-if="user && String(user.id) !== String(currentUserId)">{{ user.name }}</option>
-        </select>
-        <label for="message">Message :</label>
-        <textarea 
-        v-model="newKudo.message" 
-        id="message" 
-        placeholder="Félicitez vos collègues en partageant vos kudos :)..."
-        required></textarea>
-        <button type="submit" class="btn btn-success send-btn">Envoyer</button>
-      </form>
+        <h1>Kudos reçus :</h1>
+        <div v-if="isLoading">Chargement des données...</div>
+        <div v-else>
+            <ul v-if="receivedKudos.length > 0">
+                <li v-for="kudo in receivedKudos" :key="kudo.id" v-if="kudo">
+                    <strong>{{ getSenderName(kudo.senderId) }}</strong> :
+                    {{ kudo.message }}
+                    <button
+                        class="btn btn-danger btn-sm rounded-circle"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Supprimer le kudo"
+                        @click="deleteKudo(kudo.id)"
+                    >
+                        X
+                    </button>
+                </li>
+            </ul>
+            <p v-else>Pas de kudos reçus</p>
+        </div>
+        <h2>Envoyer un kudo :</h2>
+        <form @submit.prevent="sendKudo">
+            <label for="recipient">Destinataire :</label>
+            <select
+                v-model="newKudo.recipient"
+                id="recipient"
+                name="recipient"
+                required
+            >
+                <option disabled value="">Sélectionnez un destinataire</option>
+                <option
+                    v-for="user in users"
+                    :key="user.id"
+                    :value="user.id"
+                    v-if="user && String(user.id) !== String(currentUserId)"
+                >
+                    {{ user.name }}
+                </option>
+            </select>
+            <label for="message">Message :</label>
+            <textarea
+                v-model="newKudo.message"
+                id="message"
+                placeholder="Félicitez vos collègues en partageant vos kudos :)..."
+                required
+            ></textarea>
+            <button type="submit" class="btn btn-success send-btn">
+                Envoyer
+            </button>
+        </form>
     </div>
 </template>
 
-
 <script>
-import { apiClient } from '../services/ApiClient';
+import { apiClient } from '../services/ApiClient'
 import { mapActions } from 'vuex'
 
 export default {
-  name: 'Kudos',
-  data() {
-    return {
-      kudos: [],
-      users: [],
-      isLoading: true,
-      receivedKudos: [],
-      currentUserId: localStorage.getItem('userId'),
-      newKudo: {
-        recipient: '',
-        message: ''
-      },
-      // kudosCount: 0 // Ajouter cette ligne
-    };
-  },
-  methods: {
-    ...mapActions(['displayNotification']),
-    toggleActions () {
-      this.areActionsVisible = !this.areActionsVisible
-    },
-    // async fetchKudos() {
-    //   try {
-    //     const recipientId = localStorage.getItem('userId');
-    //     const response = await apiClient.get(`/api/posts/kudos?recipientId=${recipientId}`);
-    //     this.kudos = response.data;
-    //   } catch (error) {
-    //     console.error('Erreur lors de la récupération des kudos:', error);
-    //   }
-    // },
-    async fetchUsers() {
-    try {
-      const response = await apiClient.get('/api/auth/users');
-      console.log(response);
-      if (response && response.users) {
-        this.users = response.users.map(user => {
-          return {
-            ...user,
-            name: `${user.firstName} ${user.lastName}`
-          };
-        });
-        console.log("Utilisateurs récupérés:", this.users);
-      }
-      } catch (error) {
-        console.error('Erreur lors de la récupération des utilisateurs:', error);
-      } finally {
-        this.isLoading = false;
-    }
-    },
-    async deleteKudo(kudoId) {
-      try {
-        await apiClient.delete(`/api/posts/kudos/${kudoId}`);
-        const kudoIndex = this.receivedKudos.findIndex(k => k.id === kudoId);
-        console.log('kudoIndex:', kudoIndex); 
-        if (kudoIndex > -1) {
-          this.receivedKudos.splice(kudoIndex, 1);
-          console.log('receivedKudos après suppression:', this.receivedKudos);
+    name: 'Kudos',
+    data() {
+        return {
+            kudos: [],
+            users: [],
+            isLoading: true,
+            receivedKudos: [],
+            currentUserId: localStorage.getItem('userId'),
+            newKudo: {
+                recipient: '',
+                message: '',
+            },
+            // kudosCount: 0 // Ajouter cette ligne
         }
-        // this.displayNotification('Kudo supprimé avec succès')
-        this.$toast.success('Kudo supprimé avec succès !');
-      } catch (error) {
-        console.error('Erreur lors de la suppression du kudo:', error);
-        alert('Impossible de supprimer le kudo');
-      }
     },
-    async fetchReceivedKudos() {
-      try {
-        const userId = localStorage.getItem('userId');
-        const response = await apiClient.get(`/api/posts/kudos/received/${userId}`);
-        console.log("Réponse de l'API:", response); 
-        this.receivedKudos = response;
-        this.setKudosCount(response.length);
-        console.log("Kudos reçus:", this.receivedKudos);     
-      } catch (error) {
-        console.error('Erreur lors de la récupération des kudos reçus:', error);
-      } finally {
-    this.isLoading = false;
-  }
+    methods: {
+        ...mapActions(['displayNotification']),
+        toggleActions() {
+            this.areActionsVisible = !this.areActionsVisible
+        },
+        // async fetchKudos() {
+        //   try {
+        //     const recipientId = localStorage.getItem('userId');
+        //     const response = await apiClient.get(`/api/posts/kudos?recipientId=${recipientId}`);
+        //     this.kudos = response.data;
+        //   } catch (error) {
+        //     console.error('Erreur lors de la récupération des kudos:', error);
+        //   }
+        // },
+        async fetchUsers() {
+            try {
+                const response = await apiClient.get('/api/auth/users')
+                console.log(response)
+                if (response && response.users) {
+                    this.users = response.users.map((user) => {
+                        return {
+                            ...user,
+                            name: `${user.firstName} ${user.lastName}`,
+                        }
+                    })
+                    console.log('Utilisateurs récupérés:', this.users)
+                }
+            } catch (error) {
+                console.error(
+                    'Erreur lors de la récupération des utilisateurs:',
+                    error
+                )
+            } finally {
+                this.isLoading = false
+            }
+        },
+        async deleteKudo(kudoId) {
+            try {
+                await apiClient.delete(`/api/posts/kudos/${kudoId}`)
+                const kudoIndex = this.receivedKudos.findIndex(
+                    (k) => k.id === kudoId
+                )
+                console.log('kudoIndex:', kudoIndex)
+                if (kudoIndex > -1) {
+                    this.receivedKudos.splice(kudoIndex, 1)
+                    console.log(
+                        'receivedKudos après suppression:',
+                        this.receivedKudos
+                    )
+                }
+                // this.displayNotification('Kudo supprimé avec succès')
+                this.$toast.success('Kudo supprimé avec succès !')
+            } catch (error) {
+                console.error('Erreur lors de la suppression du kudo:', error)
+                alert('Impossible de supprimer le kudo')
+            }
+        },
+        async fetchReceivedKudos() {
+            try {
+                const userId = localStorage.getItem('userId')
+                const response = await apiClient.get(
+                    `/api/posts/kudos/received/${userId}`
+                )
+                console.log("Réponse de l'API:", response)
+                this.receivedKudos = response
+                this.setKudosCount(response.length)
+                console.log('Kudos reçus:', this.receivedKudos)
+            } catch (error) {
+                console.error(
+                    'Erreur lors de la récupération des kudos reçus:',
+                    error
+                )
+            } finally {
+                this.isLoading = false
+            }
+        },
+        async sendKudo() {
+            try {
+                const { recipient, message } = this.newKudo
+                const senderId = localStorage.getItem('userId')
+                const body = {
+                    senderId,
+                    recipientId: recipient,
+                    message,
+                    createdAt: new Date().toISOString(),
+                }
+                console.log('senderId:', senderId)
+                const recipientName =
+                    this.users.find((user) => user.id === recipient)?.name || ''
+                await apiClient.post('/api/posts/kudos', body)
+                this.newKudo = { recipient: '', message: '' }
+                // this.displayNotification(`Kudo envoyé à ${recipientName}`);
+                this.$toast.success(`Kudo envoyé à ${recipientName}`)
+                this.kudosCount++
+            } catch (error) {
+                console.error("Erreur lors de l'envoi du kudo:", error)
+            }
+        },
+        getSenderName(senderId) {
+            const sender = this.users.find((user) => user.id === senderId)
+            return sender ? `${sender.firstName} ${sender.lastName}` : 'Inconnu'
+        },
     },
-    async sendKudo() {
-      try {
-        const { recipient, message } = this.newKudo;
-        const senderId = localStorage.getItem('userId');
-        const body = { senderId, recipientId: recipient, message, createdAt: new Date().toISOString() }; 
-        console.log('senderId:', senderId);
-        const recipientName = this.users.find(user => user.id === recipient)?.name || '';
-        await apiClient.post('/api/posts/kudos', body);
-        this.newKudo = { recipient: '', message: '' };
-        // this.displayNotification(`Kudo envoyé à ${recipientName}`);
-        this.$toast.success(`Kudo envoyé à ${recipientName}`);
-        this.kudosCount++; 
-      } catch (error) {
-        console.error('Erreur lors de l\'envoi du kudo:', error);
-      }
+    async mounted() {
+        try {
+            await Promise.all([this.fetchUsers(), this.fetchReceivedKudos()])
+        } catch (error) {
+            console.error('Erreur lors du chargement des données :', error)
+        } finally {
+            this.isLoading = false
+        }
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip({
+                delay: { show: 50, hide: 50 },
+            })
+        })
     },
-    getSenderName(senderId) {
-      const sender = this.users.find(user => user.id === senderId);
-      return sender ? `${sender.firstName} ${sender.lastName}` : 'Inconnu';
+    incrementCount() {
+        this.kudosCount++
     },
-  },
-  async mounted() {
-    try {
-      await Promise.all([this.fetchUsers(), this.fetchReceivedKudos()]);
-    } catch (error) {
-      console.error("Erreur lors du chargement des données :", error);
-    } finally {
-      this.isLoading = false;
-    }
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip({
-        delay: { "show": 50, "hide": 50 }
-    })
-  })
-  },
-incrementCount() {
-      this.kudosCount++;
+    computed: {
+        kudosCount() {
+            return this.count
+        },
     },
-computed: {
-  kudosCount() {
-      return this.count;
-    }
 }
-};
 </script>
 
-  
-  <style lang="scss">
-
+<style lang="scss">
 .kudos-component {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 1rem;
-  background-color: #f8f9fa;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 h1,
 h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 ul {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
 }
 
 li {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #e9ecef;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e9ecef;
 }
 
 li:last-child {
-  border-bottom: none;
+    border-bottom: none;
 }
 
 form {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 label {
-  font-weight: bold;
-  margin-top: 1rem;
+    font-weight: bold;
+    margin-top: 1rem;
 }
 
 select,
 textarea {
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
 }
 
 textarea {
-  resize: vertical;
-  min-height: 100px;
+    resize: vertical;
+    min-height: 100px;
 }
 
-.send-btn[type="submit"] {
-  margin-top: 1rem;
-  align-self: center;
-  // background-color: #007bff;
-  // color: #ffffff;
-  border: none;
-  padding: 0.5rem 1rem;
-  // font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
+.send-btn[type='submit'] {
+    margin-top: 1rem;
+    align-self: center;
+    // background-color: #007bff;
+    // color: #ffffff;
+    border: none;
+    padding: 0.5rem 1rem;
+    // font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 @media screen and (min-width: 280px) and (max-width: 768px) {
-  .kudos-component {
-    margin: 2rem 1rem;
-  }
+    .kudos-component {
+        margin: 2rem 1rem;
+    }
 }
-
-  </style>
-  
+</style>

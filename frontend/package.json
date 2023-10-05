@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test": "jest"
+    "test": "jest",
+    "prettier": "prettier --write \"src/**/*.{js,vue,jsx,ts,tsx,css,md,json,html}\""
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
