@@ -15,22 +15,20 @@ export default {
   },
   data () {
     return {
-      userData: JSON.parse(localStorage.getItem('userData'))
+      userData: JSON.parse(localStorage.getItem('userData')),
     }
   },
-
   methods: {
       async confirmDeletion () {
-        if (confirm('Êtes-vous sûr de vouloir supprimer ce compte ?')) {
           await apiClient.delete(`/api/auth/users/${this.userData.id}`)
           localStorage.clear()
           this.$router.push({
             path: '/login?deletedAccount=true'
           })
-        }
-      }
     }
+  }
 }
+
 
 </script>
 

@@ -26,8 +26,10 @@ window.process = process
 Vue.prototype.$http = Axios
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { BootstrapVueIcons } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
 import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
@@ -36,6 +38,8 @@ Vue.use(vueCompositionApi);
 Vue.use(Toast);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+Vue.use(BootstrapVueIcons)
+
 
 Vue.prototype.moment = moment
 

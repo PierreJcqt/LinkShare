@@ -21,7 +21,7 @@
         <label for="recipient">Destinataire :</label>
         <select v-model="newKudo.recipient" id="recipient" name="recipient" required>
           <option disabled value="">Sélectionnez un destinataire</option>
-          <option v-for="user in users" :key="user.id" :value="user.id" v-if="user">{{ user.name }}</option>
+          <option v-for="user in users" :key="user.id" :value="user.id" v-if="user && String(user.id) !== String(currentUserId)">{{ user.name }}</option>
         </select>
         <label for="message">Message :</label>
         <textarea 
@@ -47,6 +47,7 @@ export default {
       users: [],
       isLoading: true,
       receivedKudos: [],
+      currentUserId: localStorage.getItem('userId'),
       newKudo: {
         recipient: '',
         message: ''
@@ -138,10 +139,6 @@ export default {
       return sender ? `${sender.firstName} ${sender.lastName}` : 'Inconnu';
     },
   },
-  // mounted() {
-  //   this.fetchUsers();
-  //   this.fetchReceivedKudos();
-  // },
   async mounted() {
     try {
       await Promise.all([this.fetchUsers(), this.fetchReceivedKudos()]);

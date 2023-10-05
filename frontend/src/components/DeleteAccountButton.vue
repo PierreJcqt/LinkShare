@@ -1,23 +1,24 @@
 <template>
+
   <div>
-    <div class="d-flex justify-content-center">
-      <button
-        class="delete-account d-flex justify-content-center align-items-center"
-        aria-label="Supprimer le compte"
-      >
-        <p @click="onDeleteAccount" class="my-3 mr-1 mr-lg-2">
-          Supprimer le compte
-        </p>
-        <b-icon class="icon-trash" icon="trash"></b-icon>
-      </button>
-    </div>
+    <button @click="showModal" class="btn btn-danger">
+      Supprimer le compte
+    </button>
+    <b-modal ref="myModalRef" hide-footer title="Confirmer la suppression">
+      <p>Êtes-vous sûr de vouloir supprimer votre compte ?</p>
+      <b-button class="btn-danger-account" variant="danger" @click="onDeleteAccount">
+        Oui, supprimer le compte
+      </b-button>
+      <b-button class="btn-danger-account" @click="hideModal">
+        Non, annuler
+      </b-button>
+    </b-modal>
   </div>
+
 </template>
 
+
 <script>
-// import { apiClient } from '../services/ApiClient'
-// import { mapActions } from 'vuex'
-// import UserDeleteAccount from '../components/UserDeleteAccount.vue'
 export default {
   name: 'DeleteAccountButton',
   data () {
@@ -25,9 +26,16 @@ export default {
       userData: JSON.parse(localStorage.getItem('userData'))
     }
   },
-  methods: {
-    async onDeleteAccount () {
-      this.$emit('onDeleteAccount')
+    methods: {
+      showModal() {
+      this.$refs.myModalRef.show()
+    },
+    hideModal() {
+      this.$refs.myModalRef.hide()
+    },
+      async onDeleteAccount () {
+        this.$emit('onDeleteAccount');
+        this.hideModal();
     }
   }
 }
@@ -45,6 +53,10 @@ export default {
   &:focus {
     outline: none;
   }
+}
+
+.btn-danger-account {
+  margin-bottom: 25px;
 }
 
 .icon-trash {

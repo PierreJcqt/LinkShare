@@ -76,7 +76,7 @@
     },
     methods: {
       async handleSearch(search) {
-      if (search.length < 2) {
+      if (search.length < 1) {
         this.usersList = []
         return;
       }
@@ -133,15 +133,10 @@
           return 0;
         });
     },
-},
-
-
+  },
 }
   </script>
   
-
-
-
 
   <style lang="scss">  
   
