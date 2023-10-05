@@ -15,7 +15,9 @@
             </router-link>
         </div>
         <NotificationAlert />
-        <router-view />
+        <transition name="fade" mode="out-in">
+            <router-view />
+        </transition>
     </div>
 </template>
 
@@ -54,6 +56,14 @@ export default {
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
     position: static;
     z-index: 1;
+}
+
+/* styles pour la transition */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
 }
 
 @media screen and (min-width: 280px) and (max-width: 767px) {

@@ -14,7 +14,6 @@
                 </p>
             </div>
         </b-row>
-
         <PostsList :userId="this.$route.params.userId" />
     </div>
 </template>

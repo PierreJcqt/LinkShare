@@ -50,7 +50,7 @@
                                     v-on:click.stop="signup()"
                                     type="submit"
                                     id="signup-button"
-                                    class="btn btn-success"
+                                    class="btn btn-success mt-3"
                                     aria-label="S'inscrire"
                                 >
                                     Inscription

@@ -1,5 +1,5 @@
 <template>
-    <div class="page-container">
+    <div class="page-container-login">
         <b-container fluid>
             <b-row class="text-center justify-content-center">
                 <b-col cols="12" lg="4">
@@ -35,7 +35,7 @@
                                     v-on:click.stop="login()"
                                     type="submit"
                                     id="login-button"
-                                    class="btn btn-success"
+                                    class="btn btn-success mt-3"
                                     aria-label="Connexion"
                                 >
                                     Connexion
@@ -181,6 +181,10 @@ export default {
 </script>
 
 <style lang="scss">
+
+.page-container-login {
+    margin-top: 100px;
+}
 a {
     text-decoration: none;
     color: #2c3e50 !important;
@@ -188,10 +192,6 @@ a {
 .router-box {
     margin-left: 5px;
 }
-// .btn-success {
-//   margin-left: 10px;
-//   margin-right: 10px;
-// }
 .line {
     display: block;
     width: 100%;
