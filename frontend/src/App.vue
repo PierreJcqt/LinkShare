@@ -10,7 +10,7 @@
                     :src="
                         require('./assets/Colorful People Group Community Logo.png')
                     "
-                    alt="logo MeetFirst"
+                    alt="logo LinkShare"
                 />
             </router-link>
         </div>
@@ -47,7 +47,7 @@ export default {
 #logo {
     margin-bottom: 50px;
     margin-top: 10px;
-    width: 400px;
+    width: 350px;
 }
 
 #nav {

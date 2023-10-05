@@ -12,11 +12,6 @@
                 <p class="user-name">
                     {{ userProfile.firstName }} {{ userProfile.lastName }}
                 </p>
-
-                <AdminDeleteAccount
-                    v-if="userData.admin && !userProfile.deleted"
-                    :userProfile="userProfile"
-                />
             </div>
         </b-row>
 
@@ -29,7 +24,6 @@ import { apiClient } from '../services/ApiClient'
 import ProfileImage from '../components/ProfileImage'
 import PostsList from '../components/PostsList'
 import Menu from '../components/Menu'
-import AdminDeleteAccount from '../components/AdminDeleteAccount'
 
 export default {
     name: 'UserProfile',
@@ -37,7 +31,6 @@ export default {
         ProfileImage,
         PostsList,
         Menu,
-        AdminDeleteAccount,
     },
     watch: {
         $route(to, from) {
@@ -51,11 +44,10 @@ export default {
         }
     },
     async mounted() {
-        const res = await apiClient.get(
-            `/api/auth/users/${this.$route.params.userId}/`
-        )
-        console.log('API response:', res)
-        this.userProfile = res.data?.user || {}
+        const res = await apiClient.get(`/api/auth/users/${this.$route.params.userId}/`);
+        console.log('API response:', res);
+        this.userProfile = res || {};
+        console.log(JSON.stringify(this.userProfile));
     },
     methods: {},
 }
