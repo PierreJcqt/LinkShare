@@ -1,21 +1,21 @@
-import router from '../router/index'
+import router from "../router/index";
 
 class ApiClient {
     constructor() {
-        this.baseUrl = 'http://localhost:3000'
+        this.baseUrl = "http://localhost:3000";
     }
 
     headers(options = {}) {
         const contentType = options.isFormData
             ? {}
             : {
-                  'Content-Type': 'application/json',
-              }
+                "Content-Type": "application/json",
+            };
 
         return {
             ...contentType,
-            Authorization: 'Bearer ' + localStorage.getItem('userToken'),
-        }
+            Authorization: "Bearer " + localStorage.getItem("userToken"),
+        };
     }
 
     //   get (path) {
@@ -51,30 +51,30 @@ class ApiClient {
             .then((response) => {
                 // console.log('Response:', response)
                 if (response.status === 401) {
-                    localStorage.clear()
-                    router.push({ name: 'Login' })
+                    localStorage.clear();
+                    router.push({ name: "Login" });
                 } else if (response.status === 404) {
-                    throw new Error('Resource not found')
+                    throw new Error("Resource not found");
                 } else if (response.status >= 400 && response.status < 500) {
-                    throw new Error(`Client error: ${response.status}`)
+                    throw new Error(`Client error: ${response.status}`);
                 } else if (response.status >= 500) {
-                    throw new Error(`Server error: ${response.status}`)
+                    throw new Error(`Server error: ${response.status}`);
                 }
-                return response.json()
+                return response.json();
             })
             .catch((error) => {
-                if (error.message === 'Ressource not found') {
+                if (error.message === "Ressource not found") {
                     console.error(
                         "Erreur 404 : La ressource demandée n'a pas été trouvée."
-                    )
+                    );
                 } else {
-                    console.error('Erreur lors de la requête:', error.message)
+                    console.error("Erreur lors de la requête:", error.message);
                     console.error(
                         "Impossible de récupérer les données de l'API"
-                    )
+                    );
                 }
-                return { error: error.message } // Retournez un objet d'erreur
-            })
+                return { error: error.message }; // Retournez un objet d'erreur
+            });
     }
 
     // post (path, body, options = {})  {
@@ -87,14 +87,14 @@ class ApiClient {
 
     post(path, body, options = {}) {
         return fetch(this.baseUrl + path, {
-            method: 'POST',
+            method: "POST",
             body: options.isFormData ? body : JSON.stringify(body),
             headers: this.headers(options),
         })
             .catch((error) => {
-                throw error
+                throw error;
             })
-            .then((response) => this.handleResponse(response))
+            .then((response) => this.handleResponse(response));
     }
 
     // delete (path) {
@@ -106,37 +106,37 @@ class ApiClient {
 
     delete(path) {
         return fetch(this.baseUrl + path, {
-            method: 'DELETE',
+            method: "DELETE",
             headers: this.headers(),
         })
             .then((response) => {
-                console.log('Réponse du serveur:', response)
+                console.log("Réponse du serveur:", response);
                 if (!response.ok) {
                     console.error(
-                        'Statut de la réponse non valide:',
+                        "Statut de la réponse non valide:",
                         response.status
-                    )
+                    );
                     throw new Error(
                         `Statut de la réponse non valide: ${response.status}`
-                    )
+                    );
                 }
                 return response
                     .text()
-                    .then((text) => (text ? JSON.parse(text) : {}))
+                    .then((text) => (text ? JSON.parse(text) : {}));
             })
             .catch((error) => {
-                console.error('Erreur lors de la requête DELETE:', error)
-                console.error('Erreur détaillée:', error.message)
-                throw error
-            })
+                console.error("Erreur lors de la requête DELETE:", error);
+                console.error("Erreur détaillée:", error.message);
+                throw error;
+            });
     }
 
     put(path, body, options = {}) {
         return fetch(this.baseUrl + path, {
-            method: 'PUT',
+            method: "PUT",
             body: options.isFormData ? body : JSON.stringify(body),
             headers: this.headers(options),
-        }).then((response) => this.handleResponse(response))
+        }).then((response) => this.handleResponse(response));
     }
 
     // async handleResponse (response) {
@@ -146,12 +146,12 @@ class ApiClient {
 
     async handleResponse(response) {
         if (!response.status.toString().match(/20[01]/)) {
-            const error = await response.json()
-            error.status = response.status // Ajoutez cette ligne
-            throw error
+            const error = await response.json();
+            error.status = response.status; // Ajoutez cette ligne
+            throw error;
         }
-        return response.json()
+        return response.json();
     }
 }
 
-export const apiClient = new ApiClient()
+export const apiClient = new ApiClient();

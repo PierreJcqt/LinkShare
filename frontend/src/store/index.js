@@ -1,13 +1,13 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import posts from './posts'
-import notificationAlert from './notification-alert'
+import Vue from "vue";
+import Vuex from "vuex";
+import posts from "./posts";
+import notificationAlert from "./notification-alert";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        companyName: 'LinkShare',
+        companyName: "LinkShare",
     },
     mutations: {},
     actions: {},
@@ -15,4 +15,4 @@ export default new Vuex.Store({
         posts,
         notificationAlert,
     },
-})
+});

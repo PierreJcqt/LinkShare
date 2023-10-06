@@ -1,19 +1,19 @@
 export default {
     state: {
-        message: '',
+        message: "",
     },
     mutations: {
         ADD_NOTIFICATION(state, message) {
-            state.message = message
+            state.message = message;
         },
         REMOVE_NOTIFICATION(state) {
-            state.message = ''
+            state.message = "";
         },
     },
     actions: {
         displayNotification({ commit }, message) {
-            commit('ADD_NOTIFICATION', message)
-            setTimeout(() => commit('REMOVE_NOTIFICATION'), 10000)
+            commit("ADD_NOTIFICATION", message);
+            setTimeout(() => commit("REMOVE_NOTIFICATION"), 10000);
         },
     },
-}
+};

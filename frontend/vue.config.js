@@ -1,10 +1,10 @@
-const { defineConfig } = require('@vue/cli-service');
+const { defineConfig } = require("@vue/cli-service");
 
 module.exports = defineConfig({
-  chainWebpack: config => {
-    config.module.rules.delete('eslint');
-  },
-  transpileDependencies: [
-    'vuetify'
-  ]
-})
+    chainWebpack: config => {
+        config.module.rules.delete("eslint");
+    },
+    transpileDependencies: [
+        "vuetify"
+    ]
+});
