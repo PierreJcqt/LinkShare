@@ -20,7 +20,7 @@
             v-bind:class="`collapsed mt-2 position-fixed ${
                 areActionsVisible && 'visible'
             }`"
-        >
+            >
             <b-card class="border-0" @click="toggleActions">
                 <p class="card-text">
                     <button
@@ -76,6 +76,12 @@ export default {
             areActionsVisible: false,
         }
     },
+    mounted() {
+        document.body.addEventListener('click', this.bodyClick);
+    },
+    beforeDestroy() {
+        document.body.removeEventListener('click', this.bodyClick);
+    },
     methods: {
         toggleActions(event) {
             this.areActionsVisible = !this.areActionsVisible
@@ -91,6 +97,14 @@ export default {
         changeOrReloadPage(name) {
             if (name === this.$route.name) return window.location.reload()
             this.$router.push({ name })
+        },
+        bodyClick(event) {
+            if (
+                !this.$el.contains(event.target) &&
+                event.target.className !== 'profile-btn d-flex btn-light position-fixed justify-content-center justify-content-lg-between align-items-center'
+            ) {
+                this.areActionsVisible = false;
+            }
         },
     },
 }

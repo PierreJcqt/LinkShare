@@ -8,7 +8,7 @@
             :elementId="post.id"
             modifyText="Modifier la publication"
             deleteText="Supprimer la publication"
-        >
+            >
             <b-modal
                 :id="`modal-${post.id}`"
                 ref="editPostModal"
@@ -17,7 +17,7 @@
                 ok-variant="light"
                 @ok="onUpload(false)"
                 ok-only
-            >
+                >
                 <b-form>
                     <PostForm
                         :imgUrl="post.imageUrl"

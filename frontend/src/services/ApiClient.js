@@ -49,7 +49,7 @@ class ApiClient {
             headers: this.headers(),
         })
             .then((response) => {
-                console.log('Response:', response)
+                // console.log('Response:', response)
                 if (response.status === 401) {
                     localStorage.clear()
                     router.push({ name: 'Login' })

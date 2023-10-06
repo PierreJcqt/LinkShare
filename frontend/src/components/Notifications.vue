@@ -1,17 +1,17 @@
 <template>
     <div>
         <!-- <button
-        @click="toggleActions"
-        class="notification-btn d-flex position-fixed justify-content-center align-items-center p-0"
-        aria-label="Afficher les notifications"
-      >
-        <span
-          v-if="notificationsList.length || kudosCount"
-          class="notifications-number position-absolute d-flex justify-content-center align-items-center"
-          >{{ notificationsList.length + kudosCount }}</span
-        >
-        <b-icon icon="bell-fill"></b-icon>
-      </button> -->
+            @click="toggleActions"
+            class="notification-btn d-flex position-fixed justify-content-center align-items-center p-0"
+            aria-label="Afficher les notifications"
+            >
+            <span
+                v-if="notificationsList.length || kudosCount"
+                class="notifications-number position-absolute d-flex justify-content-center align-items-center"
+                >{{ notificationsList.length + kudosCount }}</span
+            >
+            <b-icon icon="bell-fill"></b-icon>
+        </button> -->
         <b-collapse
             v-if="notificationsList.length"
             id="notification-collapsed"
@@ -82,6 +82,17 @@ export default {
         }
     },
     async mounted() {
+        // Écouter l'événement newPost émis par le serveur
+        socket.on('newPost', (newPost) => {
+            this.$toast.success('Un nouveau post a été créé !');
+            // Vous pouvez ajouter le nouveau post à votre liste de notifications ici
+            this.addNotification({
+                postId: newPost.id,
+                content: 'Un nouvel utilisateur a créé une publication !',
+                // Ajoutez d'autres informations à la notification si nécessaire
+            });
+        });
+
         setTimeout(() => this.fetchNotifications(), 100)
         this.interval = setInterval(() => this.fetchNotifications(), 10000)
     },
@@ -89,14 +100,17 @@ export default {
         clearInterval(this.interval)
     },
     methods: {
-        created() {
-            socket.on('newPost', (newPost) => {
-                this.addNotification({
-                    postId: newPost.id,
-                    content: 'Un nouvel utilisateur a créé une publication !',
-                    // Ajoutez d'autres informations à la notification si nécessaire
-                })
-            })
+        // created() {
+        //     socket.on('newPost', (newPost) => {
+        //         this.addNotification({
+        //             postId: newPost.id,
+        //             content: 'Un nouvel utilisateur a créé une publication !',
+        //             // Ajoutez d'autres informations à la notification si nécessaire
+        //         })
+        //     })
+        // },
+        addNotification(newNotification) {
+            this.notificationsList = [newNotification, ...this.notificationsList];
         },
         toggleActions() {
             this.areActionsVisible = !this.areActionsVisible
@@ -121,7 +135,7 @@ export default {
 <style lang="scss">
 .notification-btn {
     top: 22px;
-    right: 175px;
+    right: 355px;
     box-shadow: 0px 1px 1px 1px rgba(204, 204, 204, 0.2);
     background-color: rgba(108, 117, 125, 0.1) !important;
     border-radius: 100%;

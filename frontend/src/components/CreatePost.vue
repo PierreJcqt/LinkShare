@@ -47,12 +47,13 @@ export default {
             this.selectedFile = file
         },
         async onSubmit(event) {
-            await this.createPost({
+            const newPost = await this.createPost({
                 selectedFile: this.selectedFile,
                 content: this.content,
             })
             // this.displayNotification('Publication créée !')
-            this.$toast.success('Publication créée !')
+            this.$toast.success('Publication créée !');
+            socket.emit('postCreated', newPost);
             this.resetForm(event)
         },
         resetForm() {

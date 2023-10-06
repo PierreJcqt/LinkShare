@@ -19,8 +19,8 @@
                     }"
                     ><p class="mb-0 font-weight-bold">
                         {{ comment.User.firstName }} {{ comment.User.lastName }}
-                    </p></router-link
-                >
+                    </p>
+                </router-link>
                 <input
                     v-if="isEditing"
                     ref="inputContent"
@@ -47,14 +47,21 @@
                 />
             </div>
         </div>
-        <p class="text-secondary comment-date">
+        <!-- <p class="text-secondary comment-date">
             {{ moment().locale('fr').calendar() }}
+        </p> -->
+        <!-- <p class="text-secondary comment-date">
+            {{ moment(comment.createdAt).locale('fr').calendar() }}
+        </p> -->
+        <p class="text-secondary comment-date">
+            {{ formatDate(comment.createdAt) }}
         </p>
     </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import moment from 'moment';
 import { apiClient } from '../services/ApiClient'
 import EditButton from './EditButton'
 import ProfileImage from './ProfileImage'
@@ -102,6 +109,18 @@ export default {
             this.isEditing = false
             // this.displayNotification('Commentaire modifié !')
             this.$toast.success('Commentaire modifié !')
+        },
+        formatDate(date) {
+            console.log('Date reçue:', date);
+            const now = moment();
+            // console.log(now);
+            // const commentDate = moment(date);
+            // console.log('Heure et date du commentaire:', commentDate.format('HH:mm:ss YYYY-MM-DD'));
+            // console.log(commentDate);
+            if (moment(date).isSame(now, 'day')) {
+                return `Aujourd'hui à ${now.format('HH:mm')}`;
+            }
+            return commentDate.format('YYYY-MM-DD'); // format par défaut
         },
     },
 }
