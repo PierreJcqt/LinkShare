@@ -25,7 +25,12 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Kudo',
-    }
+    },
+    // createdAt: {
+    //   type: DataTypes.DATE,
+    //   allowNull: false,
+    //   defaultValue: DataTypes.NOW,
+    // },
   )
 
   return Kudo

@@ -23,7 +23,7 @@ exports.createPost = async (req, res, next) => {
 
     res.status(201).json({ post })
   } catch (error) {
-    console.log(error)
+      console.log(error)
     res.status(400).json({ error })
   }
 }

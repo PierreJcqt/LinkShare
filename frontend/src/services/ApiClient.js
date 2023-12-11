@@ -86,6 +86,9 @@ class ApiClient {
     // }
 
     post(path, body, options = {}) {
+        console.log("Sending request to:", this.baseUrl + path);
+        console.log("With body:", body);
+        console.log("With headers:", this.headers(options));
         return fetch(this.baseUrl + path, {
             method: "POST",
             body: options.isFormData ? body : JSON.stringify(body),

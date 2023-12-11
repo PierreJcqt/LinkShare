@@ -22,14 +22,15 @@
         </div>
         <h2>Envoyer un kudo :</h2>
         <form @submit.prevent="sendKudo">
-            <label for="recipient">Destinataire :</label>
+            <label for="recipients">Destinataires :</label>
             <select
-                v-model="newKudo.recipient"
-                id="recipient"
-                name="recipient"
+                v-model="newKudo.recipients"
+                id="recipients"
+                name="recipients"
+                multiple
                 required
             >
-                <option disabled value="">Sélectionnez un destinataire</option>
+                <option disabled value="">Sélectionnez un ou plusieurs destinataires</option>
                 <option
                     v-for="user in users"
                     :key="user.id"
@@ -67,7 +68,8 @@ export default {
             receivedKudos: [],
             currentUserId: localStorage.getItem('userId'),
             newKudo: {
-                recipient: '',
+                // recipient: '',
+                recipients: [],
                 message: '',
             },
             // kudosCount: 0 // Ajouter cette ligne
@@ -138,7 +140,6 @@ export default {
                 )
                 console.log("Réponse de l'API:", response)
                 this.receivedKudos = response
-                this.setKudosCount(response.length)
                 console.log('Kudos reçus:', this.receivedKudos)
             } catch (error) {
                 console.error(
@@ -151,25 +152,36 @@ export default {
         },
         async sendKudo() {
             try {
-                const { recipient, message } = this.newKudo
-                const senderId = localStorage.getItem('userId')
-                const body = {
-                    senderId,
-                    recipientId: recipient,
-                    message,
-                    createdAt: new Date().toISOString(),
+                const { recipients, message } = this.newKudo // Utilisez 'recipients' au lieu de 'recipient'
+                const senderId = localStorage.getItem('userId');
+                const createdAt = new Date().toISOString(); 
+                const recipientNames = []; // Créez un tableau pour stocker les noms des destinataires
+                for (const recipient of recipients) {
+                    const body = {
+                        senderId,
+                        recipients: [recipient],
+                        message,
+                        createdAt
+                    };
+                    console.log('senderId:', senderId);
+                    console.log("recipients:", recipient);
+                    console.log("message:", message);
+                    console.log("createdAt:", createdAt);
+                    const recipientName =
+                        this.users.find((user) => user.id === recipient)?.name || '';
+                    recipientNames.push(recipientName); // Ajoutez le nom du destinataire au tableau
+                    await apiClient.post('/api/posts/kudos', body);
                 }
-                console.log('senderId:', senderId)
-                const recipientName =
-                    this.users.find((user) => user.id === recipient)?.name || ''
-                await apiClient.post('/api/posts/kudos', body)
-                this.newKudo = { recipient: '', message: '' }
-                // this.displayNotification(`Kudo envoyé à ${recipientName}`);
-                this.$toast.success(`Kudo envoyé à ${recipientName}`)
-                this.kudosCount++
-            } catch (error) {
-                console.error("Erreur lors de l'envoi du kudo:", error)
-            }
+                this.newKudo = { recipients: [], message: '' }; // Utilisez 'recipients' au lieu de 'recipient'
+                // Utilisez recipientNames pour afficher les noms des destinataires
+                for (const name of recipientNames) {
+                    this.$toast.success(`Kudo envoyé à ${name}`);
+                }
+                // this.kudosCount++
+                this.kudosCount += recipients.length; // Mettez à jour kudosCount en fonction du nombre de destinataires
+                } catch (error) {
+                    console.error("Erreur lors de l'envoi du kudo:", error)
+                }
         },
         getSenderName(senderId) {
             const sender = this.users.find((user) => user.id === senderId)
