@@ -206,6 +206,7 @@ export default {
                 // }
                 // this.kudosCount += recipients.length;
                 } catch (error) {
+                    this.$toast.error("Erreur lors de l'envoi du kudo.");
                     console.error("Erreur lors de l'envoi du kudo:", error)
                 }
         },

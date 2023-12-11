@@ -37,6 +37,14 @@
                                         aria-label="Écrire votre adresse mail"
                                     ></b-form-input>
                                     <b-form-input
+                                        id="role"
+                                        type="role"
+                                        placeholder="Fonction"
+                                        v-model="input.role"
+                                        class="account-input text-dark mb-2 pl-3 w-100"
+                                        aria-label="Renseignez votre fonction ici"
+                                    ></b-form-input>
+                                    <b-form-input
                                         id="password"
                                         type="password"
                                         placeholder="Mot de passe"
@@ -95,6 +103,7 @@ export default {
                 lastName: '',
                 email: '',
                 password: '',
+                role: ''
             },
         }
     },
@@ -113,7 +122,9 @@ export default {
                 this.input.firstName != '' &&
                 this.input.lastName != '' &&
                 this.input.email != '' &&
-                this.input.password != ''
+                this.input.password != '' 
+                &&
+                this.input.role != ''
             ) {
                 apiClient
                     .post('/api/auth/signup', this.input)

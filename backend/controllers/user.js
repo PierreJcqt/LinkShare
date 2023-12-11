@@ -11,6 +11,7 @@ exports.signup = (req, res, next) => {
     let lastName = req.body.lastName;
     let email    = req.body.email;
     let password = req.body.password;
+    // let role = req.body.role;
 
   // Permet de vérifier que tous les champs sont complétés
     if(email == null || email == '' || firstName == null || firstName == ''|| lastName == null || lastName == '' || password == null || password == '') {
@@ -39,11 +40,12 @@ exports.signup = (req, res, next) => {
 
   // Permet de vérifier que l'utilisateur que l'on souhaite créer n'existe pas déjà
     User.findOne({
-        attributes: ['firstName' || 'lastName' || 'email'],
+        attributes: ['firstName' || 'lastName' || 'email' || 'role'],
         where: { 
             firstName: req.body.firstName, 
             lastName: req.body.lastName,
-            email: req.body.email
+            email: req.body.email,
+            role: req.body.role
         }
     })
     .then(userExist => {
@@ -55,6 +57,7 @@ exports.signup = (req, res, next) => {
                     firstName: req.body.firstName, 
                     lastName: req.body.lastName,
                     email: req.body.email,
+                    role: req.body.role,
                     isAdmin: req.body.isAdmin,
                     password: hash
                 })            
@@ -88,6 +91,7 @@ exports.login = async (req, res, next) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: req.body.email,
+                role: user.role,
                 password: req.body.password,
                 isAdmin: user.isAdmin,
                 imageUrl: user.imageUrl

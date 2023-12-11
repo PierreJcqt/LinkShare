@@ -92,6 +92,23 @@
                                     sm="2"
                                     class="d-none d-lg-block p-0 bloc"
                                 >
+                                    <label for="role"> Fonction </label>
+                                </b-col>
+                                <b-col sm="10">
+                                    <b-form-input
+                                        id="role"
+                                        type="text"
+                                        placeholder="Rôle"
+                                        v-model="input.role"
+                                        class="text-dark mb-2 pl-lg-3"
+                                    ></b-form-input>
+                                </b-col>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <b-col
+                                    sm="2"
+                                    class="d-none d-lg-block p-0 bloc"
+                                >
                                     <label for="email"> Email </label>
                                 </b-col>
                                 <b-col sm="10">
@@ -166,6 +183,7 @@ export default {
                 firstName: userData.firstName,
                 lastName: userData.lastName,
                 email: userData.email,
+                role: userData.role || '',
             },
             selectedFile: null,
             url: null,
@@ -194,7 +212,8 @@ export default {
                     localStorage.setItem('userData', JSON.stringify(res.user))
                     console.log(res)
                     this.userData = res.user
-                    window.location.reload()
+                    localStorage.setItem('showToastAfterReload', 'true');
+                    window.location.reload();
                 })
         },
     },
@@ -206,6 +225,13 @@ export default {
             )
         },
     },
+    mounted() {
+    if (localStorage.getItem('showToastAfterReload') === 'true') {
+        this.$toast.success(`Informations modifiées avec succès`);
+        // Enlever l'indicateur après avoir affiché le toast
+        localStorage.removeItem('showToastAfterReload');
+    }
+}
 }
 </script>
 
