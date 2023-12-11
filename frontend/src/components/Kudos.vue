@@ -7,10 +7,10 @@
                 <li v-for="kudo in receivedKudos" :key="kudo.id" v-if="kudo">
                     <strong>{{ getSenderName(kudo.senderId) }}</strong> :
                     {{ kudo.message }}
+                    <!-- data-toggle="tooltip"
+                        data-placement="top" -->
                     <button
                         class="btn btn-danger btn-sm rounded-circle"
-                        data-toggle="tooltip"
-                        data-placement="top"
                         title="Supprimer le kudo"
                         @click="deleteKudo(kudo.id)"
                     >
@@ -21,7 +21,39 @@
             <p v-else>Pas de kudos reçus</p>
         </div>
         <h2>Envoyer un kudo :</h2>
-        <form @submit.prevent="sendKudo">
+        <div>
+            <b-dropdown text="Sélectionnez un ou plusieurs destinataires" class="m-md-2">
+                <div class="px-3">
+                    <b-form-checkbox-group 
+                    v-model="newKudo.recipients" 
+                    :state="isDestinatairesValid">
+                        <b-form-checkbox
+                        v-for="user in users"
+                        :key="user.id"
+                        :value="user.id"
+                        v-if="user && String(user.id) !== String(currentUserId)"
+                        class="user-checkbox"
+                        @change="validateDestinataires"
+                        >
+                        <span class="user-name">{{ user.name }}</span>
+                        </b-form-checkbox>
+                    </b-form-checkbox-group>
+                </div>
+            </b-dropdown>
+            <b-form @submit.prevent="sendKudo">
+                <b-form-textarea 
+                    v-model="newKudo.message"
+                    id="message"
+                    placeholder="Félicitez vos collègues en partageant vos kudos :)..."
+                    rows="3"
+                    max-rows="6"
+                    required
+                    :state="triedToSubmit ? newKudo.message.length !== 0: null"
+                ></b-form-textarea>
+                <button type="submit" variant="primary" class="btn btn-success send-btn mt-2">Envoyer</button>
+            </b-form>
+        </div>
+        <!-- <form @submit.prevent="sendKudo">
             <label for="recipients">Destinataires :</label>
             <select
                 v-model="newKudo.recipients"
@@ -50,7 +82,7 @@
             <button type="submit" class="btn btn-success send-btn">
                 Envoyer
             </button>
-        </form>
+        </form> -->
     </div>
 </template>
 
@@ -67,12 +99,14 @@ export default {
             isLoading: true,
             receivedKudos: [],
             currentUserId: localStorage.getItem('userId'),
+            selectedUserIds: [], // ID de l'utilisateur sélectionné
+            isDestinatairesValid: false,
+            triedToSubmit: false,
+            message: '', 
             newKudo: {
-                // recipient: '',
                 recipients: [],
                 message: '',
             },
-            // kudosCount: 0 // Ajouter cette ligne
         }
     },
     methods: {
@@ -80,15 +114,6 @@ export default {
         toggleActions() {
             this.areActionsVisible = !this.areActionsVisible
         },
-        // async fetchKudos() {
-        //   try {
-        //     const recipientId = localStorage.getItem('userId');
-        //     const response = await apiClient.get(`/api/posts/kudos?recipientId=${recipientId}`);
-        //     this.kudos = response.data;
-        //   } catch (error) {
-        //     console.error('Erreur lors de la récupération des kudos:', error);
-        //   }
-        // },
         async fetchUsers() {
             try {
                 const response = await apiClient.get('/api/auth/users')
@@ -125,7 +150,6 @@ export default {
                         this.receivedKudos
                     )
                 }
-                // this.displayNotification('Kudo supprimé avec succès')
                 this.$toast.success('Kudo supprimé avec succès !')
             } catch (error) {
                 console.error('Erreur lors de la suppression du kudo:', error)
@@ -151,11 +175,17 @@ export default {
             }
         },
         async sendKudo() {
+            if (!this.isFormValid()) {
+                this.triedToSubmit = true; 
+                console.error("Veuillez remplir tous les champs requis.");
+                this.$toast.error("Veuillez sélectionner des destinataires.");
+                return;
+            }
             try {
-                const { recipients, message } = this.newKudo // Utilisez 'recipients' au lieu de 'recipient'
+                const { recipients, message } = this.newKudo 
                 const senderId = localStorage.getItem('userId');
                 const createdAt = new Date().toISOString(); 
-                const recipientNames = []; // Créez un tableau pour stocker les noms des destinataires
+                // const recipientNames = [];
                 for (const recipient of recipients) {
                     const body = {
                         senderId,
@@ -163,26 +193,36 @@ export default {
                         message,
                         createdAt
                     };
-                    console.log('senderId:', senderId);
-                    console.log("recipients:", recipient);
-                    console.log("message:", message);
-                    console.log("createdAt:", createdAt);
-                    const recipientName =
-                        this.users.find((user) => user.id === recipient)?.name || '';
-                    recipientNames.push(recipientName); // Ajoutez le nom du destinataire au tableau
+                    // const recipientName = this.users.find((user) => user.id === recipient)?.name || '';
+                    // recipientNames.push(recipientName);
                     await apiClient.post('/api/posts/kudos', body);
                 }
-                this.newKudo = { recipients: [], message: '' }; // Utilisez 'recipients' au lieu de 'recipient'
-                // Utilisez recipientNames pour afficher les noms des destinataires
-                for (const name of recipientNames) {
-                    this.$toast.success(`Kudo envoyé à ${name}`);
-                }
-                // this.kudosCount++
-                this.kudosCount += recipients.length; // Mettez à jour kudosCount en fonction du nombre de destinataires
+                this.$toast.success(`Kudo envoyé avec succès`);
+                this.resetForm();
+                this.newKudo = { recipients: [], message: '' }; 
+                this.triedToSubmit = false; 
+                // for (const name of recipientNames) {
+                //     this.$toast.success(`Kudo envoyé à ${name}`);
+                // }
+                // this.kudosCount += recipients.length;
                 } catch (error) {
                     console.error("Erreur lors de l'envoi du kudo:", error)
                 }
         },
+        validateDestinataires() {
+            this.isDestinatairesValid = this.newKudo.recipients.length > 0;
+        },
+        isFormValid() {
+            return this.newKudo.recipients.length !== 0 && this.newKudo.message.trim().length !== 0;
+        },
+        resetForm() {
+            this.newKudo.recipients = [];
+            this.newKudo.message = '';
+            this.isDestinatairesValid = false;
+            this.triedToSubmit = false; 
+        },
+
+
         getSenderName(senderId) {
             const sender = this.users.find((user) => user.id === senderId)
             return sender ? `${sender.firstName} ${sender.lastName}` : 'Inconnu'
@@ -204,11 +244,6 @@ export default {
     },
     incrementCount() {
         this.kudosCount++
-    },
-    computed: {
-        kudosCount() {
-            return this.count
-        },
     },
 }
 </script>
@@ -232,6 +267,10 @@ h2 {
 ul {
     list-style-type: none;
     padding: 0;
+}
+
+.user-name {
+  margin-left: 10px; /* Ajustez la marge selon vos besoins */
 }
 
 li {
@@ -269,11 +308,8 @@ textarea {
 .send-btn[type='submit'] {
     margin-top: 1rem;
     align-self: center;
-    // background-color: #007bff;
-    // color: #ffffff;
     border: none;
     padding: 0.5rem 1rem;
-    // font-weight: bold;
     border-radius: 4px;
     cursor: pointer;
 }

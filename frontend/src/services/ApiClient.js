@@ -11,37 +11,11 @@ class ApiClient {
             : {
                 "Content-Type": "application/json",
             };
-
         return {
             ...contentType,
             Authorization: "Bearer " + localStorage.getItem("userToken"),
         };
     }
-
-    //   get (path) {
-    //     // console.log(this.baseUrl);
-    //     return fetch(this.baseUrl + path, {
-    //       headers: this.headers()
-    //     })
-    //       .then(response => {
-    //         console.log('Response:', response);
-    //         if (response.status === 401) {
-    //           localStorage.clear();
-    //           router.push({ name: 'Login' });
-    //         } else if (response.status === 404) {
-    //           throw new Error('Resource not found');
-    //         }
-
-    //         return response.json();
-    //       })
-    //       .catch(error => {
-    //         if (error.message === 'Resource not found') {
-    //           console.error("Erreur 404 : La ressource demandée n'a pas été trouvée.");
-    //         } else {
-    //           alert("Impossible de récupérer les données de l'API");
-    //         }
-    //       });
-    // }
 
     get(path) {
         // console.log(this.baseUrl);
@@ -77,18 +51,7 @@ class ApiClient {
             });
     }
 
-    // post (path, body, options = {})  {
-    //   return fetch(this.baseUrl + path, {
-    //     method: 'POST',
-    //     body: options.isFormData ? body : JSON.stringify(body),
-    //     headers: this.headers(options)
-    //   }).then(response => this.handleResponse(response))
-    // }
-
     post(path, body, options = {}) {
-        console.log("Sending request to:", this.baseUrl + path);
-        console.log("With body:", body);
-        console.log("With headers:", this.headers(options));
         return fetch(this.baseUrl + path, {
             method: "POST",
             body: options.isFormData ? body : JSON.stringify(body),
@@ -99,13 +62,6 @@ class ApiClient {
             })
             .then((response) => this.handleResponse(response));
     }
-
-    // delete (path) {
-    //   return fetch(this.baseUrl + path, {
-    //     method: 'DELETE',
-    //     headers: this.headers()
-    //   }).then(response => this.handleResponse(response))
-    // }
 
     delete(path) {
         return fetch(this.baseUrl + path, {
@@ -142,15 +98,10 @@ class ApiClient {
         }).then((response) => this.handleResponse(response));
     }
 
-    // async handleResponse (response) {
-    //   if (!response.status.toString().match(/20[01]/)) throw await response.json()
-    //   return response.json()
-    // }
-
     async handleResponse(response) {
         if (!response.status.toString().match(/20[01]/)) {
             const error = await response.json();
-            error.status = response.status; // Ajoutez cette ligne
+            error.status = response.status; 
             throw error;
         }
         return response.json();

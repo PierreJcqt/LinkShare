@@ -12,6 +12,9 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import moment from "moment";
+import 'jquery';
+import 'popper.js';
+import 'bootstrap';
 import vueCompositionApi from "@vue/composition-api";
 import Axios from "axios";
 import Toast from "vue-toastification";
@@ -25,6 +28,7 @@ Vue.prototype.$http = Axios;
 
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import { BootstrapVueIcons } from "bootstrap-vue";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "bootstrap-vue/dist/bootstrap-vue-icons.min.css";

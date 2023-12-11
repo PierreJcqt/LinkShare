@@ -67,33 +67,18 @@ exports.getReceivedKudos = async (req, res) => {
 // Créer un kudo
 exports.createKudo = async (req, res) => {
   try {
-    // const { senderId, recipientId, message, createdAt } = req.body;
     const { senderId, recipients, message, createdAt } = req.body;
-
-    // if (!senderId || !recipientId || !message || !createdAt) {
-    //   return res.status(400).json({ error: 'Tous les champs sont obligatoires' });
-    // }
 
     if (!senderId || !recipients || !message || !createdAt) {
       return res.status(400).json({ error: 'Tous les champs sont obligatoires' });
     }
-    console.log("req.body:", req.body);
-    console.log("senderId:", req.body.senderId);
-    console.log("recipients:", req.body.recipients);
-    console.log("message:", req.body.message);
-    console.log("createdAt:", req.body.createdAt);
-    
-    // const kudo = await Kudo.create({ senderId, recipientId, message, createdAt });
 
-    // Créez un kudo pour chaque destinataire
     const createdKudos = [];
     for (const recipientId of recipients) {
       const kudo = await Kudo.create({ senderId, recipientId, message, createdAt });
       createdKudos.push(kudo);
     }
 
-
-    // res.status(201).json(kudo);
     res.status(201).json(createdKudos);
 
   } catch (error) {
