@@ -1,6 +1,5 @@
 // BON TEST QUI MARCHE BIEN
 
-
 const { getOneUser } = require('./user');
 const { User } = require('../models/index');
 
@@ -31,7 +30,7 @@ describe('getOneUser', () => {
   it('should return a 500 error if there is a server error', async () => {
     User.findOne.mockRejectedValue(new Error('Erreur serveur'));
 
-    const req = { params: { id: 1 } };
+    const req = { params: { id: 29 } };
     const res = {
       status: jest.fn().mockReturnThis(),
       send: jest.fn(),

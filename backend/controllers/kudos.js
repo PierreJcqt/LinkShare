@@ -1,5 +1,5 @@
 const { User } = require('../models/index');
-const db = require('../models')
+const db = require('../models');
 const { Kudo } = db.sequelize.models
 
 // Récupérer tous les kudos
