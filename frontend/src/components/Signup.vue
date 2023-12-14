@@ -122,8 +122,7 @@ export default {
                 this.input.firstName != '' &&
                 this.input.lastName != '' &&
                 this.input.email != '' &&
-                this.input.password != '' 
-                &&
+                this.input.password != '' &&
                 this.input.role != ''
             ) {
                 apiClient
@@ -144,9 +143,7 @@ export default {
                         if (error.error) {
                             return (this.errorMessage = error.error)
                         }
-                        this.notyf.success(
-                            'Votre compte a bien été créé ! À présent, veuillez vous connecter.'
-                        )
+                        this.$toast.success('Votre compte a bien été crée !');
                         router.push({ name: 'Login' })
                     })
             } else {

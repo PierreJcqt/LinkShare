@@ -10,13 +10,13 @@ jest.mock('bcrypt', () => ({
 
 describe('checkPassword', () => {
     it('should return true if password is correct', async () => {
-        bcrypt.compare.mockResolvedValue(true); // Simulate bcrypt.compare resolving to true
+        bcrypt.compare.mockResolvedValue(true);
         const result = await checkPassword('testPassword', 'hashedPassword');
         expect(result).toBe(true);
     });
 
     it('should return false if password is incorrect', async () => {
-        bcrypt.compare.mockResolvedValue(false); // Simulate bcrypt.compare resolving to false
+        bcrypt.compare.mockResolvedValue(false);
         const result = await checkPassword('wrongPassword', 'hashedPassword');
         expect(result).toBe(false);
     });

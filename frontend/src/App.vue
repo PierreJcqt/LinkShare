@@ -75,6 +75,9 @@ export default {
     #nav #logo {
         max-width: 180px;
     }
+    #logo {
+    width: 100px;
+}
 }
 @media screen and (min-width: 767px) and (max-width: 991px) {
     #nav #logo {

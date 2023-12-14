@@ -54,6 +54,7 @@ export default {
                 .catch(() => {})
             this.content = ''
             this.$emit('commentCreated', comment)
+            this.$toast.success('Commentaire crée !')
         },
         newline() {
             this.content = `${this.content}`

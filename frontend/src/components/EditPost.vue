@@ -57,7 +57,6 @@ export default {
         },
         async onDelete() {
             await this.deletePost(this.post.id)
-            // this.displayNotification('Publication supprimée !')
             this.$toast.success('Publication supprimée !')
         },
         onFileSelected(file) {
@@ -78,8 +77,7 @@ export default {
                 selectedFile: this.selectedFile,
                 content: this.content,
             })
-            // this.displayNotification('Publication modifiée !')
-            this.$toast.success('Publication supprimée!')
+            this.$toast.success('Publication modifiée !')
         },
     },
 }

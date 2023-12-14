@@ -7,8 +7,6 @@
                 <li v-for="kudo in receivedKudos" :key="kudo.id" v-if="kudo">
                     <strong>{{ getSenderName(kudo.senderId) }}</strong> :
                     {{ kudo.message }}
-                    <!-- data-toggle="tooltip"
-                        data-placement="top" -->
                     <button
                         class="btn btn-danger btn-sm rounded-circle"
                         title="Supprimer le kudo"
@@ -185,7 +183,6 @@ export default {
                 const { recipients, message } = this.newKudo 
                 const senderId = localStorage.getItem('userId');
                 const createdAt = new Date().toISOString(); 
-                // const recipientNames = [];
                 for (const recipient of recipients) {
                     const body = {
                         senderId,
@@ -193,18 +190,12 @@ export default {
                         message,
                         createdAt
                     };
-                    // const recipientName = this.users.find((user) => user.id === recipient)?.name || '';
-                    // recipientNames.push(recipientName);
                     await apiClient.post('/api/posts/kudos', body);
                 }
                 this.$toast.success(`Kudo envoyé avec succès`);
                 this.resetForm();
                 this.newKudo = { recipients: [], message: '' }; 
                 this.triedToSubmit = false; 
-                // for (const name of recipientNames) {
-                //     this.$toast.success(`Kudo envoyé à ${name}`);
-                // }
-                // this.kudosCount += recipients.length;
                 } catch (error) {
                     this.$toast.error("Erreur lors de l'envoi du kudo.");
                     console.error("Erreur lors de l'envoi du kudo:", error)

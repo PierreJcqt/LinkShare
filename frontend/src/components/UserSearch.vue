@@ -127,7 +127,11 @@ export default {
         },
         triggerInput() {
             this.visible = true
-            this.$refs.input.click()
+            this.$nextTick(() => {
+            if (this.$refs.input && typeof this.$refs.input.click === 'function') {
+                this.$refs.input.click();
+            }
+        });
         },
     },
     computed: {

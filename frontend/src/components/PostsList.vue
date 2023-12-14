@@ -8,7 +8,6 @@
                 <Post :post="post" />
             </b-col>
         </b-row>
-
         <p class="mx-2">{{ posts.errorMessage }}</p>
     </div>
 </template>
@@ -21,6 +20,11 @@ export default {
     name: 'PostsList',
     components: {
         Post,
+    },
+    data() {
+        return {
+        isEmpty: false,
+        };
     },
     props: ['userId'],
     async mounted() {
@@ -50,6 +54,15 @@ export default {
                 return { userId: this.userId }
             } else {
                 return {}
+            }
+        },
+    },
+    watch: {
+        'posts.list': {
+            immediate: true,
+            handler(newList) {
+                this.isEmpty = newList.length === 0;
+                this.$emit('update:isEmpty', this.isEmpty);
             }
         },
     },

@@ -8,6 +8,12 @@
             >
                 Gérez vos Kudos
             </button>
+            <!-- <button
+                class="btn btn-light toggle-button"
+                @click="toggleComponentTask"
+            >
+                Gérez vos Tâches
+            </button> -->
         </div>
         <Notifications :kudos-count="kudosCount" />
         <router-view :kudosCount="kudosCount" />
@@ -17,6 +23,9 @@
         <transition name="slide">
             <Kudos v-if="showComponent" />
         </transition>
+        <!-- <transition name="slide">
+            <Tasks v-if="showComponentTask" />
+        </transition> -->
     </div>
 </template>
 
@@ -25,6 +34,7 @@ import ProfileButton from '../components/ProfileButton'
 import UserSearch from '../components/UserSearch'
 import Notifications from '../components/Notifications'
 import Kudos from '../components/Kudos'
+import Tasks from '../components/Tasks'
 import socket from '../services/socket'
 
 export default {
@@ -33,6 +43,7 @@ export default {
         ProfileButton,
         UserSearch,
         Kudos,
+        Tasks,
         Notifications,
     },
     props: {
@@ -44,6 +55,7 @@ export default {
     data() {
         return {
             showComponent: false,
+            showComponentTask: false,
             notificationsList: [],
         }
     },
@@ -61,6 +73,9 @@ export default {
     methods: {
         toggleComponent() {
             this.showComponent = !this.showComponent
+        },
+        toggleComponentTask() {
+            this.showComponentTask = !this.showComponentTask
         },
     },
 }

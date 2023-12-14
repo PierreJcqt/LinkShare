@@ -14,7 +14,8 @@
                 </p>
             </div>
         </b-row>
-        <PostsList :userId="this.$route.params.userId" />
+        <PostsList :userId="this.$route.params.userId" @update:isEmpty="handleEmptyList" />
+        <div v-if="isPostsListEmpty" class="no-posts">Pas de publications</div>
     </div>
 </template>
 
@@ -40,6 +41,7 @@ export default {
         return {
             userProfile: {},
             userData: JSON.parse(localStorage.getItem('userData')),
+            isPostsListEmpty: false,
         }
     },
     async mounted() {
@@ -48,7 +50,11 @@ export default {
         this.userProfile = res || {};
         console.log(JSON.stringify(this.userProfile));
     },
-    methods: {},
+    methods: {
+        handleEmptyList(isEmpty) {
+            this.isPostsListEmpty = isEmpty;
+        },
+    },
 }
 </script>
 
@@ -61,6 +67,14 @@ export default {
 }
 .profile-main-picture {
     height: 120px;
+}
+.no-posts {
+    text-align: center; /* Centre le texte */
+    font-size: 1.5em; /* Augmente la taille de la police */
+    margin-top: 20px; /* Ajoute un peu d'espace au-dessus de la div */
+    margin-bottom: 150px;
+    color: #666; /* Couleur du texte */
+    font-weight: bold; /* Rend le texte en gras */
 }
 .user-name {
     font-size: 20px;

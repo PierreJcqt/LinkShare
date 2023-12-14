@@ -5,7 +5,7 @@ const router = express.Router();
 const postCtrl = require('../controllers/posts');
 const commentsCtrl = require('../controllers/comments');
 const likeCtrl = require('../controllers/likes');
-const notificationsCtrl = require('../controllers/notifications')
+// const notificationsCtrl = require('../controllers/notifications')
 const kudosCtrl = require('../controllers/kudos');
 
 
@@ -27,9 +27,6 @@ router.delete('/:postId/comments/:id', auth, commentsCtrl.deleteComment);
 router.post('/:postId/likes', auth, likeCtrl.likeOnePost);
 router.get('/:postId/like', auth, likeCtrl.getLikeOnOnePost);
 router.get('/:postId/likes', auth, likeCtrl.getAllLikesOfOnePost);
-
-router.get('/api/notifications', auth, notificationsCtrl.getNotificationsOfOneUser);
-router.delete('/api/notifications/:id', auth, notificationsCtrl.deleteNotification);
 
 router.get('/kudos', auth, kudosCtrl.getAllKudos);
 router.get('/kudos/:id', auth, kudosCtrl.getOneKudo);

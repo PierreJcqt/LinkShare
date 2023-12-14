@@ -20,8 +20,7 @@
             <span class="likes-number ml-2">{{ likesCount }}</span>
         </button>
         <b-modal :id="`modal-likes-${post.id}`" :title="`${likesCount} J'aime`">
-            <div v-for="like in likesList" :key="like">
-                <!-- remettre :key="like" si fail -->
+            <div v-for="like in likesList" :key="like.id">
                 <router-link
                     :to="{
                         name: 'UserProfile',

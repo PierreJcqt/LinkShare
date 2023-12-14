@@ -53,7 +53,7 @@
                                     />
                                 </b-col>
                             </div>
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center input">
                                 <b-col
                                     sm="2"
                                     class="d-none d-lg-block p-0 bloc"
@@ -70,7 +70,7 @@
                                     ></b-form-input>
                                 </b-col>
                             </div>
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center input">
                                 <b-col
                                     sm="2"
                                     class="d-none d-lg-block p-0 bloc"
@@ -87,12 +87,12 @@
                                     ></b-form-input>
                                 </b-col>
                             </div>
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center input">
                                 <b-col
                                     sm="2"
                                     class="d-none d-lg-block p-0 bloc"
                                 >
-                                    <label for="role"> Fonction </label>
+                                <label for="role"> Fonction </label>
                                 </b-col>
                                 <b-col sm="10">
                                     <b-form-input
@@ -104,7 +104,7 @@
                                     ></b-form-input>
                                 </b-col>
                             </div>
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center input">
                                 <b-col
                                     sm="2"
                                     class="d-none d-lg-block p-0 bloc"
@@ -152,7 +152,7 @@
                         </button>
                     </b-form>
 
-                    <UserDeleteAccount />
+                    <UserDeleteAccount class="btn-block"/>
                 </b-card>
             </b-col>
         </b-row>
@@ -275,6 +275,7 @@ export default {
 .card-body {
     padding-bottom: 0;
 }
+
 @media screen and (min-width: 280px) and (max-width: 769px) {
     .create-button {
         width: 100% !important;
@@ -288,6 +289,12 @@ export default {
     }
     .shadow {
         box-shadow: 0rem 0.2rem 0.5rem rgba(0, 0, 0, 0.08) !important;
+    }
+    .input {
+        margin-left: 100px;
+    }
+    .btn-block {
+        margin-bottom: 10px;
     }
 }
 </style>
