@@ -5,7 +5,6 @@ const router = express.Router();
 const postCtrl = require('../controllers/posts');
 const commentsCtrl = require('../controllers/comments');
 const likeCtrl = require('../controllers/likes');
-// const notificationsCtrl = require('../controllers/notifications')
 const kudosCtrl = require('../controllers/kudos');
 
 

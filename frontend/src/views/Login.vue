@@ -30,16 +30,15 @@
                                         aria-label="Écrire votre mot de passe"
                                     ></b-form-input>
                                 </b-form-group>
-
-                                <button
-                                    v-on:click.stop="login()"
-                                    type="submit"
-                                    id="login-button"
-                                    class="btn btn-success mt-3"
-                                    aria-label="Connexion"
-                                >
-                                    Connexion
-                                </button>
+                                <div class="mt-3">
+                                    <b-button 
+                                        variant="success"
+                                        v-on:click.stop="login()"
+                                        type="submit"
+                                        id="login-button"
+                                        aria-label="Connexion"
+                                    >Connexion</b-button>
+                                </div>
                                 <p class="my-3 text-danger">
                                     {{ errorMessage }}
                                 </p>
@@ -87,49 +86,8 @@ export default {
     mounted() {
         if (this.$route.query.deletedAccount) {
             this.$toast.success('Votre compte a bien été supprimé !')
-            // this.$bvToast.toast('Votre compte a bien été supprimé', {
-            //   title: 'Notification',
-            //   autoHideDelay: 4000
-            // })
         }
     },
-
-    // methods: {
-    //     login () {
-    //         if (this.input.email != '' && this.input.password != '') {
-    //             apiClient
-    //                 .post('/api/auth/login', this.input)
-    //                 .then(data => {
-    //                     if (!data.token) {
-    //                         this.errorMessage = 'Utilisateur introuvable';
-    //                     } else {
-    //                         localStorage.setItem('userToken', data.token);
-    //                         localStorage.setItem('userData', JSON.stringify(data.user));
-    //                         this.$toast.success('Bienvenue sur LinkShare, votre réseau social d\'entreprise !');
-    //                         router.push({ name: 'Posts' });
-    //                     }
-    //                 })
-    //                 .catch(error => {
-    //                     console.log('Error object:', error);
-    //                     if (error.response) {
-    //                         if (error.response.status === 429) {
-    //                             this.errorMessage = 'Votre compte a été bloqué suite à trop de tentatives de connexion infructueuses. Veuillez réessayer dans 15 minutes.';
-    //                         } else if (error.response.status === 401) {
-    //                             this.errorMessage = 'Mot de passe incorrect';
-    //                         } else {
-    //                             this.errorMessage = 'Email et/ou mot de passe incorrect(s) !';
-    //                         }
-    //                     } else if (error.message) {
-    //                         this.errorMessage = error.message;
-    //                     } else {
-    //                         this.errorMessage = 'Une erreur s\'est produite. Veuillez réessayer.';
-    //                     }
-    //                 });
-    //         } else {
-    //             this.errorMessage = 'Veuillez renseigner un email et un mot de passe';
-    //         }
-    //     }
-    // }
 
     methods: {
         login() {
@@ -197,6 +155,10 @@ a {
     width: 100%;
     height: 1px;
     background-color: rgba(192, 192, 192, 0.5);
+}
+.login-button {
+    background-color: red;
+    width: 500%;
 }
 .account-input {
     &:-webkit-autofill {

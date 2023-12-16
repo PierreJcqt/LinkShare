@@ -64,21 +64,19 @@ exports.modifyComment = (req, res, next) => {
 exports.deleteComment = async (req, res, next) => {
   const where = {
     id: req.params.id
-  }
-
-  if (!req.user.admin) {
-    where.userId = req.user.id
-  }
-
-  Comments.findOne({ where })
-    .then(comment => {
-      if (!comment) {
-        res.status(400).json({ error: "Vous n'avez pas l'autorisation" })
-      }
-      comment
-        .destroy()
-        .then(() => res.status(200).json({ message: 'Commentaire supprimé !' }))
-        .catch(error => res.status(400).json({ error }))
-    })
-    .catch(error => res.status(500).json({ error: error.message }))
+    }
+    if (!req.user.admin) {
+      where.userId = req.user.id
+    }
+    Comments.findOne({ where })
+      .then(comment => {
+        if (!comment) {
+          res.status(400).json({ error: "Vous n'avez pas l'autorisation" })
+        }
+        comment
+          .destroy()
+          .then(() => res.status(200).json({ message: 'Commentaire supprimé !' }))
+          .catch(error => res.status(400).json({ error }))
+      })
+  .catch(error => res.status(500).json({ error: error.message }))
 }

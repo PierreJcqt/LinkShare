@@ -1,26 +1,21 @@
 const fs = require('fs')
-
 const db = require('../models')
 const { Post } = db.sequelize.models
 
 exports.createPost = async (req, res, next) => {
   let postObject = req.body
-
   if (req.file) {
     postObject = JSON.parse(req.body.post)
     postObject.imageUrl = `${req.protocol}://${req.get('host')}/images/${
       req.file.filename
     }`
   }
-
   try {
     let post = await Post.create({
       ...postObject,
       userId: req.user.id
     })
-
     post = await Post.findOne({ where: { id: post.id }, include: db.User })
-
     res.status(201).json({ post })
   } catch (error) {
       console.log(error)

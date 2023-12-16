@@ -113,11 +113,11 @@ export default {
 <style lang="scss">
 .profile-btn {
     font-weight: 500;
-    width: 100px;
+    width: 120px;
     border: none;
     color: #000;
     top: 20px;
-    right: 45px;
+    right: 20px;
     height: 45px;
     padding: 5px 5px 5px 16px;
     box-shadow: 0px 1px 1px 1px rgba(204, 204, 204, 0.2);

@@ -228,7 +228,6 @@ export default {
     mounted() {
     if (localStorage.getItem('showToastAfterReload') === 'true') {
         this.$toast.success(`Informations modifiées avec succès`);
-        // Enlever l'indicateur après avoir affiché le toast
         localStorage.removeItem('showToastAfterReload');
     }
 }

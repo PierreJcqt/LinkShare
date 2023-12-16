@@ -51,7 +51,6 @@ export default {
             if (params.userId) {
                 userIdParams = `&userId=${params.userId}`;
             }
-
             return apiClient
                 .get(`/api/posts?page=${state.page}${userIdParams}`)
                 .then((response) => {
@@ -69,12 +68,9 @@ export default {
 
         async loadMore({ state, commit, dispatch }, params) {
             if (state.isOnLastPage) return;
-
             commit("INCREMENT_PAGE");
             const initialLength = state.list.length;
-
             await dispatch("fetchPosts", params);
-
             if (state.list.length === initialLength) {
                 commit("REACHED_LAST_PAGE");
             }
@@ -94,16 +90,13 @@ export default {
             let body = {
                 content: content,
             };
-
             const isFormData = !!selectedFile;
-
             if (isFormData) {
                 const formData = new FormData();
                 formData.append("image", selectedFile);
                 formData.append("post", JSON.stringify(body));
                 body = formData;
             }
-
             apiClient
                 .put("/api/posts/" + postId, body, { isFormData })
                 .then((response) => {
@@ -116,7 +109,6 @@ export default {
                 content: content,
             };
             const isFormData = !!selectedFile;
-
             if (isFormData) {
                 const formData = new FormData();
                 formData.append("image", selectedFile);

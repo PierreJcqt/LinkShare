@@ -18,12 +18,10 @@ class ApiClient {
     }
 
     get(path) {
-        // console.log(this.baseUrl);
         return fetch(this.baseUrl + path, {
             headers: this.headers(),
         })
             .then((response) => {
-                // console.log('Response:', response)
                 if (response.status === 401) {
                     localStorage.clear();
                     router.push({ name: "Login" });
@@ -47,7 +45,7 @@ class ApiClient {
                         "Impossible de récupérer les données de l'API"
                     );
                 }
-                return { error: error.message }; // Retournez un objet d'erreur
+                return { error: error.message };
             });
     }
 

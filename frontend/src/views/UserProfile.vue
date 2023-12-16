@@ -69,12 +69,12 @@ export default {
     height: 120px;
 }
 .no-posts {
-    text-align: center; /* Centre le texte */
-    font-size: 1.5em; /* Augmente la taille de la police */
-    margin-top: 20px; /* Ajoute un peu d'espace au-dessus de la div */
-    margin-bottom: 150px;
-    color: #666; /* Couleur du texte */
-    font-weight: bold; /* Rend le texte en gras */
+    text-align: center;
+    font-size: 1.5em; 
+    margin-top: 20px; 
+    margin-bottom: 250px;
+    color: #666; 
+    font-weight: bold;
 }
 .user-name {
     font-size: 20px;
