@@ -4,28 +4,18 @@
         <div class="btn-container-toggle">
             <button
                 class="btn btn-light toggle-button"
-                @click="toggleComponent"
+                @click="toggleComponent($event)"
             >
                 Gérez vos Kudos
             </button>
-            <!-- <button
-                class="btn btn-light toggle-button"
-                @click="toggleComponentTask"
-            >
-                Gérez vos Tâches
-            </button> -->
         </div>
-        <Notifications :kudos-count="kudosCount" />
         <router-view :kudosCount="kudosCount" />
         <div class="btn-container">
             <UserSearch />
         </div>
         <transition name="slide">
-            <Kudos v-if="showComponent" />
+            <Kudos v-if="showComponent" @close="toggleComponent"/>
         </transition>
-        <!-- <transition name="slide">
-            <Tasks v-if="showComponentTask" />
-        </transition> -->
     </div>
 </template>
 
@@ -71,11 +61,11 @@ export default {
         },
     },
     methods: {
-        toggleComponent() {
-            this.showComponent = !this.showComponent
-        },
-        toggleComponentTask() {
-            this.showComponentTask = !this.showComponentTask
+        toggleComponent(event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            this.showComponent = !this.showComponent;
         },
     },
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="kudos-component">
+    <div class="kudos-component" ref="kudosModal">
         <h1>Kudos reçus :</h1>
         <div v-if="isLoading">Chargement des données...</div>
         <div v-else>
@@ -51,36 +51,6 @@
                 <button type="submit" variant="primary" class="btn btn-success send-btn mt-2">Envoyer</button>
             </b-form>
         </div>
-        <!-- <form @submit.prevent="sendKudo">
-            <label for="recipients">Destinataires :</label>
-            <select
-                v-model="newKudo.recipients"
-                id="recipients"
-                name="recipients"
-                multiple
-                required
-            >
-                <option disabled value="">Sélectionnez un ou plusieurs destinataires</option>
-                <option
-                    v-for="user in users"
-                    :key="user.id"
-                    :value="user.id"
-                    v-if="user && String(user.id) !== String(currentUserId)"
-                >
-                    {{ user.name }}
-                </option>
-            </select>
-            <label for="message">Message :</label>
-            <textarea
-                v-model="newKudo.message"
-                id="message"
-                placeholder="Félicitez vos collègues en partageant vos kudos :)..."
-                required
-            ></textarea>
-            <button type="submit" class="btn btn-success send-btn">
-                Envoyer
-            </button>
-        </form> -->
     </div>
 </template>
 
@@ -213,14 +183,19 @@ export default {
             this.isDestinatairesValid = false;
             this.triedToSubmit = false; 
         },
-
-
         getSenderName(senderId) {
             const sender = this.users.find((user) => user.id === senderId)
             return sender ? `${sender.firstName} ${sender.lastName}` : 'Inconnu'
         },
+        handleClickOutside(event) {
+            const modalElement = this.$refs.kudosModal;
+            if (modalElement && !modalElement.contains(event.target)) {
+                this.$emit('close');
+            }
+        },
     },
     async mounted() {
+        document.addEventListener('click', this.handleClickOutside);
         try {
             await Promise.all([this.fetchUsers(), this.fetchReceivedKudos()])
         } catch (error) {
@@ -236,6 +211,9 @@ export default {
     },
     incrementCount() {
         this.kudosCount++
+    },
+    beforeDestroy() {
+        document.removeEventListener('click', this.handleClickOutside);
     },
 }
 </script>
