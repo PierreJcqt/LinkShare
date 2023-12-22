@@ -51,7 +51,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['deletePost', 'modifyPost', 'displayNotification']),
+        ...mapActions(['deletePost', 'modifyPost']),
         toggleActions() {
             this.areActionsVisible = !this.areActionsVisible
         },

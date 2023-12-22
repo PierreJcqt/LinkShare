@@ -104,13 +104,11 @@ export default {
     methods: {
         onEnterPress() {
             if (!this.emptyField) {
-                this.$emit('submitForm')
-                // socket.emit("newPost", newPost);
+                this.$emit('submitForm');
             }
         },
         onEnterKeyPress() {
-            this.$emit('submitForm')
-            // socket.emit("newPost", newPost);
+            this.$emit('submitForm');
         },
         onFileSelected(event) {
             this.url = URL.createObjectURL(event.target.files[0])

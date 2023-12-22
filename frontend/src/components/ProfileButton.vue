@@ -164,7 +164,7 @@ export default {
 #profile-collapsed {
     top: 62px;
     right: 44px;
-    z-index: 1;
+    z-index: 9999; 
 }
 @media screen and (min-width: 280px) and (max-width: 769px) {
     .profile-btn {

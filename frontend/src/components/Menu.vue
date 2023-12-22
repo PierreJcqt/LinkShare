@@ -72,6 +72,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 .toggle-button {
     z-index: 1000;
     box-shadow: 0px 1px 1px 1px rgba(204, 204, 204, 0.2);
@@ -100,7 +101,7 @@ export default {
         margin-top: 20px;
         max-width: 100px;
         width: 100px;
-        margin-left: 150px;
+        margin-left: 130px;
     }
 }
 
