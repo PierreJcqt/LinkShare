@@ -82,7 +82,6 @@ exports.createKudo = async (req, res) => {
     res.status(201).json(createdKudos);
 
   } catch (error) {
-    console.log('Erreur lors de la création du kudo:', error);
     res.status(400).json({ error: error.message });
   }
 };

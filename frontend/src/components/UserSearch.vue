@@ -93,8 +93,6 @@ export default {
                     },
                 }
             )
-            console.log(res)
-            console.log(res.users)
             if (res && res.users) {
                 this.usersList = res.users
                     .map((user) => {

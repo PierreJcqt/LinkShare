@@ -142,10 +142,11 @@ export default {
                 this.isLoading = false
             }
         },
+
+
         async sendKudo() {
             if (!this.isFormValid()) {
                 this.triedToSubmit = true; 
-                console.error("Veuillez remplir tous les champs requis.");
                 this.$toast.error("Veuillez sélectionner des destinataires.");
                 return;
             }
@@ -168,7 +169,6 @@ export default {
                 this.triedToSubmit = false; 
                 } catch (error) {
                     this.$toast.error("Erreur lors de l'envoi du kudo.");
-                    console.error("Erreur lors de l'envoi du kudo:", error)
                 }
         },
         validateDestinataires() {
@@ -183,6 +183,9 @@ export default {
             this.isDestinatairesValid = false;
             this.triedToSubmit = false; 
         },
+
+
+        
         getSenderName(senderId) {
             const sender = this.users.find((user) => user.id === senderId)
             return sender ? `${sender.firstName} ${sender.lastName}` : 'Inconnu'
