@@ -210,7 +210,6 @@ export default {
                 .put('/api/auth/users/:id', body, { isFormData })
                 .then((res) => {
                     localStorage.setItem('userData', JSON.stringify(res.user))
-                    console.log(res)
                     this.userData = res.user
                     localStorage.setItem('showToastAfterReload', 'true');
                     window.location.reload();

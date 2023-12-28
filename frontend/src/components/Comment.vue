@@ -107,20 +107,14 @@ export default {
             )
             this.comment.updatedAt = res.comment.updatedAt
             this.isEditing = false
-            // this.displayNotification('Commentaire modifié !')
             this.$toast.success('Commentaire modifié !')
         },
         formatDate(date) {
-            console.log('Date reçue:', date);
             const now = moment();
-            // console.log(now);
-            // const commentDate = moment(date);
-            // console.log('Heure et date du commentaire:', commentDate.format('HH:mm:ss YYYY-MM-DD'));
-            // console.log(commentDate);
             if (moment(date).isSame(now, 'day')) {
                 return `Aujourd'hui à ${now.format('HH:mm')}`;
             }
-            return commentDate.format('YYYY-MM-DD'); // format par défaut
+            return commentDate.format('YYYY-MM-DD');
         },
     },
 }

@@ -85,7 +85,6 @@ export default {
         async fetchUsers() {
             try {
                 const response = await apiClient.get('/api/auth/users')
-                console.log(response)
                 if (response && response.users) {
                     this.users = response.users.map((user) => {
                         return {
@@ -93,13 +92,8 @@ export default {
                             name: `${user.firstName} ${user.lastName}`,
                         }
                     })
-                    console.log('Utilisateurs récupérés:', this.users)
                 }
             } catch (error) {
-                console.error(
-                    'Erreur lors de la récupération des utilisateurs:',
-                    error
-                )
             } finally {
                 this.isLoading = false
             }
@@ -110,17 +104,11 @@ export default {
                 const kudoIndex = this.receivedKudos.findIndex(
                     (k) => k.id === kudoId
                 )
-                console.log('kudoIndex:', kudoIndex)
                 if (kudoIndex > -1) {
                     this.receivedKudos.splice(kudoIndex, 1)
-                    console.log(
-                        'receivedKudos après suppression:',
-                        this.receivedKudos
-                    )
                 }
                 this.$toast.success('Kudo supprimé avec succès !')
             } catch (error) {
-                console.error('Erreur lors de la suppression du kudo:', error)
                 alert('Impossible de supprimer le kudo')
             }
         },
@@ -130,14 +118,8 @@ export default {
                 const response = await apiClient.get(
                     `/api/posts/kudos/received/${userId}`
                 )
-                console.log("Réponse de l'API:", response)
                 this.receivedKudos = response
-                console.log('Kudos reçus:', this.receivedKudos)
             } catch (error) {
-                console.error(
-                    'Erreur lors de la récupération des kudos reçus:',
-                    error
-                )
             } finally {
                 this.isLoading = false
             }

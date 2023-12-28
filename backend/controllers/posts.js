@@ -18,7 +18,6 @@ exports.createPost = async (req, res, next) => {
     post = await Post.findOne({ where: { id: post.id }, include: db.User })
     res.status(201).json({ post })
   } catch (error) {
-      console.log(error)
     res.status(400).json({ error })
   }
 }

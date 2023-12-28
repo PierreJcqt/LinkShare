@@ -111,7 +111,6 @@ export default {
                         }
                     })
                     .catch((error) => {
-                        console.log('Error object:', error)
                         if (error.status) {
                             if (error.status === 429) {
                                 this.errorMessage =

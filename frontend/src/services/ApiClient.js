@@ -67,7 +67,6 @@ class ApiClient {
             headers: this.headers(),
         })
             .then((response) => {
-                console.log("Réponse du serveur:", response);
                 if (!response.ok) {
                     console.error(
                         "Statut de la réponse non valide:",
@@ -82,8 +81,6 @@ class ApiClient {
                     .then((text) => (text ? JSON.parse(text) : {}));
             })
             .catch((error) => {
-                console.error("Erreur lors de la requête DELETE:", error);
-                console.error("Erreur détaillée:", error.message);
                 throw error;
             });
     }

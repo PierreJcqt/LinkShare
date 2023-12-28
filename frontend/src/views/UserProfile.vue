@@ -46,9 +46,7 @@ export default {
     },
     async mounted() {
         const res = await apiClient.get(`/api/auth/users/${this.$route.params.userId}/`);
-        console.log('API response:', res);
         this.userProfile = res || {};
-        console.log(JSON.stringify(this.userProfile));
     },
     methods: {
         handleEmptyList(isEmpty) {
