@@ -82,14 +82,11 @@ export default {
         }
     },
     async mounted() {
-        // Écouter l'événement newPost émis par le serveur
         socket.on('newPost', (newPost) => {
             this.$toast.success('Un nouveau post a été créé !');
-            // Vous pouvez ajouter le nouveau post à votre liste de notifications ici
             this.addNotification({
                 postId: newPost.id,
                 content: 'Un nouvel utilisateur a créé une publication !',
-                // Ajoutez d'autres informations à la notification si nécessaire
             });
         });
 
@@ -100,15 +97,6 @@ export default {
         clearInterval(this.interval)
     },
     methods: {
-        // created() {
-        //     socket.on('newPost', (newPost) => {
-        //         this.addNotification({
-        //             postId: newPost.id,
-        //             content: 'Un nouvel utilisateur a créé une publication !',
-        //             // Ajoutez d'autres informations à la notification si nécessaire
-        //         })
-        //     })
-        // },
         addNotification(newNotification) {
             this.notificationsList = [newNotification, ...this.notificationsList];
         },
@@ -117,7 +105,6 @@ export default {
         },
         async fetchNotifications() {
             const res = await apiClient.get(`/api/posts/notifications/`)
-            console.log('API response:', res)
             this.notificationsList = res.data?.notifications || []
         },
         async deleteNotification(notificationToDelete) {

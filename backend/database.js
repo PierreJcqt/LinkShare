@@ -37,7 +37,6 @@ db.posts = require("./models/posts")(sequelize, Sequelize);
 db.comments = require("./models/comments")(sequelize, Sequelize);
 db.likes = require("./models/likes")(sequelize, Sequelize);
 db.kudos = require("./models/kudos")(sequelize, Sequelize);
-// db.roles = require("./models/roles")(sequelize, Sequelize);
 
 
 module.exports = db;

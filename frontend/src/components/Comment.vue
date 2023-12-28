@@ -88,7 +88,6 @@ export default {
                 `/api/posts/${this.post.id}/comments/${this.comment.id}`
             )
             this.$emit('commentDeleted', this.comment)
-            // this.displayNotification('Commentaire supprimé !')
             this.$toast.success('Commentaire supprimée !')
         },
         startEditing() {

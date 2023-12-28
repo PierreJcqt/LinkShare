@@ -8,7 +8,6 @@ export default {
     name: 'NotificationAlert',
     watch: {
         message(newMessage) {
-            console.log(newMessage);
             if (!newMessage) return
             this.$bvToast.toast(newMessage, {
                 title: 'Notification',
