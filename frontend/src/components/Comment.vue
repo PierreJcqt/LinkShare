@@ -47,12 +47,6 @@
                 />
             </div>
         </div>
-        <!-- <p class="text-secondary comment-date">
-            {{ moment().locale('fr').calendar() }}
-        </p> -->
-        <!-- <p class="text-secondary comment-date">
-            {{ moment(comment.createdAt).locale('fr').calendar() }}
-        </p> -->
         <p class="text-secondary comment-date">
             {{ formatDate(comment.createdAt) }}
         </p>
