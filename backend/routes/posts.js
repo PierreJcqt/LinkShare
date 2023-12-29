@@ -7,7 +7,6 @@ const commentsCtrl = require('../controllers/comments');
 const likeCtrl = require('../controllers/likes');
 const kudosCtrl = require('../controllers/kudos');
 
-
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 
@@ -32,7 +31,6 @@ router.get('/kudos/:id', auth, kudosCtrl.getOneKudo);
 router.post('/kudos', auth, kudosCtrl.createKudo);
 router.delete('/kudos/:id', auth, kudosCtrl.deleteKudo);
 router.get('/kudos/received/:usersId', auth, kudosCtrl.getReceivedKudos);
-
 
 
 module.exports = router;

@@ -9,8 +9,6 @@ const { RateLimiterMemory } = require('rate-limiter-flexible');
 const { User } = require('./models');
 const { checkPassword } = require('./middleware/password');
 
-// require('dotenv').config();
-
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:8080" }));
 

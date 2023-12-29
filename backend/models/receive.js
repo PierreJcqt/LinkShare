@@ -5,7 +5,6 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class Receive extends Model {
         static associate(models) {
-        // Définir les associations ici, si nécessaire
         }
     }
 
@@ -21,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         modelName: 'Receive',
-        timestamps: false // Pas de champs timestamps
+        timestamps: false 
     });
 
     return Receive;
