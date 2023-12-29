@@ -112,7 +112,7 @@ export default {
             const now = moment();
             const commentDate = moment(date);
             if (moment(date).isSame(now, 'day')) {
-                return `Aujourd'hui à ${now.format('HH:mm')}`;
+                return `Aujourd'hui à ${commentDate.format('HH:mm')}`;
             }
             return commentDate.format('YYYY-MM-DD');
         },
