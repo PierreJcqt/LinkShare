@@ -60,12 +60,9 @@ exports.modifyComment = (req, res, next) => {
   })
 }
 
-exports.deleteComment = async (req, res, next) => {
+exports.deleteComment = (req, res, next) => {
   const where = {
     id: req.params.id
-    }
-    if (!req.user.admin) {
-      where.userId = req.user.id
     }
     Comments.findOne({ where })
       .then(comment => {

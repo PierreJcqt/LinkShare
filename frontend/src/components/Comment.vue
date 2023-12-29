@@ -110,6 +110,7 @@ export default {
         },
         formatDate(date) {
             const now = moment();
+            const commentDate = moment(date);
             if (moment(date).isSame(now, 'day')) {
                 return `Aujourd'hui à ${now.format('HH:mm')}`;
             }
