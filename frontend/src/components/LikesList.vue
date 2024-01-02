@@ -22,6 +22,7 @@
         <b-modal :id="`modal-likes-${post.id}`" :title="`${likesCount} J'aime`">
             <div v-for="like in likesList" :key="like.id">
                 <router-link
+                    v-if="like.User"
                     :to="{
                         name: 'UserProfile',
                         params: { userId: like.User.id },
@@ -61,8 +62,12 @@ export default {
     },
     methods: {
         async fetchLikesList() {
-            const res = await apiClient.get(`/api/posts/${this.post.id}/likes`)
-            this.likesList = res.allLikes
+            try {
+                const res = await apiClient.get(`/api/posts/${this.post.id}/likes`);
+                this.likesList = res.allLikes.filter(like => like.User != null);
+            } catch (error) {
+                console.error('Erreur lors de la récupération des likes', error);
+            }
         },
     },
 }

@@ -38,7 +38,7 @@
                                     ></b-form-input>
                                     <b-form-input
                                         id="role"
-                                        type="role"
+                                        type="text"
                                         placeholder="Fonction"
                                         v-model="input.role"
                                         class="account-input text-dark mb-2 pl-3 w-100"

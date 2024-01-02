@@ -9,10 +9,18 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       postId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Posts',
+          key: 'id'
+        }
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -23,9 +31,9 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
-    queryInterface.addIndex('Likes', ['postId', 'userId'], {
-      unique: true
-    })
+    // queryInterface.addIndex('Likes', ['postId', 'userId'], {
+    //   unique: true
+    // })
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Likes')

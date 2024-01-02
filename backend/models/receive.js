@@ -7,9 +7,8 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
         }
     }
-
     Receive.init({
-        id_users: {
+        userId: {
         type: DataTypes.INTEGER,
         primaryKey: true
         },
@@ -22,6 +21,5 @@ module.exports = (sequelize, DataTypes) => {
         modelName: 'Receive',
         timestamps: false 
     });
-
     return Receive;
 };

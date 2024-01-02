@@ -34,7 +34,11 @@ exports.getAllLikesOfOnePost = async (req, res, next) => {
   try {
     const allLikes = await Likes.findAll({
       where: { postId: req.params.postId },
-      include: db.User
+      include: {
+        model: db.User,
+        required: true // Ceci assure que seuls les likes avec un utilisateur valide sont inclus
+      }
+      // include: db.User
     })
     res.status(200).json({ allLikes })
   } catch (error) {

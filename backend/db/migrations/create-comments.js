@@ -9,7 +9,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       postId: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        references: {
+          model: 'Posts',
+          key: 'id'
+        }
       },
       content: {
         type: Sequelize.TEXT
