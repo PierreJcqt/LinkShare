@@ -295,4 +295,10 @@ export default {
         margin-bottom: 10px;
     }
 }
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .input {
+        margin-left: 150px;
+    }
+}
 </style>

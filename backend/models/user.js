@@ -6,7 +6,8 @@ const { deleteFile } = require('../services/file-removal')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate (models) {
-      User.hasMany(models.Post, { foreignKey: 'userId' })
+      User.hasMany(models.Post, { foreignKey: 'userId' });
+      User.hasMany(models.Likes, { foreignKey: 'userId', onDelete: 'CASCADE' });
       models.User.hasMany(models.Kudo, { as: 'SentKudos', foreignKey: 'senderId' });
       models.User.hasMany(models.Kudo, { as: 'ReceivedKudos', foreignKey: 'recipientId' });
     }
