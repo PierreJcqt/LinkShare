@@ -1,6 +1,4 @@
 const Sequelize = require("sequelize");
-const dbConfig = require("./config/database.json");
-const user = require("./models/index");
 const path = 'mariadb://root:password@localhost:3306/linksharetwo';
 const sequelize = new Sequelize(path);
 
@@ -11,21 +9,6 @@ sequelize.authenticate().then(() => {
 }).finally(() => {
   sequelize.close();
 });
-
-// Initialise Sequelize
-const config = {
-    username: dbConfig.USER,
-    password: dbConfig.PASSWORD,
-    database: dbConfig.DB,
-    host: dbConfig.HOST,
-    dialect: "mariadb",
-    dialectOptions: {
-        useUTC: false,
-        dateStrings: true,
-        typeCast: true
-    },
-    timezone: '+01:00',
-}
 
 const db = {};
 
@@ -40,4 +23,3 @@ db.kudos = require("./models/kudos")(sequelize, Sequelize);
 
 
 module.exports = db;
-
