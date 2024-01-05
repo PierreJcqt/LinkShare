@@ -13,7 +13,6 @@
                 >
                     <b-icon icon="search" class="mr-2 icon-search"></b-icon>
                 </span>
-                <!-- rajouter :list="usersList" dans vue-simple-siggest si besoin -->
                 <vue-simple-suggest
                     v-model="search"
                     @input="handleSearch"
@@ -64,7 +63,6 @@ import 'vue-simple-suggest/dist/styles.css'
 import { apiClient } from '../services/ApiClient'
 import router from '../router/index'
 import ProfileImage from './ProfileImage'
-// import Typeahead from 'typeahead';
 
 export default {
     name: 'UserSearch',

@@ -14,7 +14,6 @@
 </template>
 
 <script>
-// import { apiClient } from '../services/ApiClient'
 import { mapActions } from 'vuex'
 import PostForm from './PostForm'
 import socket from '../services/socket'
@@ -42,7 +41,7 @@ export default {
             // Réinitialiser le formulaire
             this.resetForm()
         },
-        ...mapActions(['createPost', 'displayNotification']),
+        ...mapActions(['createPost']),
         onFileSelected(file) {
             this.selectedFile = file
         },
@@ -51,7 +50,6 @@ export default {
                 selectedFile: this.selectedFile,
                 content: this.content,
             })
-            // this.displayNotification('Publication créée !')
             this.$toast.success('Publication créée !');
             socket.emit('postCreated', newPost);
             this.resetForm(event)

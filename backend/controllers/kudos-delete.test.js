@@ -1,4 +1,4 @@
-// BON TEST QUI MARCHE
+// BON TEST QUI MARCHE ( supprimer kudo )
 
 const { deleteKudo } = require('./kudos');
 const db = require('../models');
