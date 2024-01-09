@@ -4,7 +4,7 @@
             <b-row class="text-center justify-content-center">
                 <b-col cols="12" lg="4">
                     <b-card
-                        class="account-card border-0 shadow p-3 mb-5 mt-3 bg-white rounded"
+                        class="account-card border-0 shadow p-3 mb-5 mt-3 mr-5 bg-white rounded"
                     >
                         <div class="pt-sm-3 pt-lg-0">
                             <b-card-text class="login-text h4"
