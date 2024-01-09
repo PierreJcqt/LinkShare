@@ -22,7 +22,6 @@
 <script>
 import ProfileButton from '../components/ProfileButton'
 import UserSearch from '../components/UserSearch'
-import Notifications from '../components/Notifications'
 import Kudos from '../components/Kudos'
 import Tasks from '../components/Tasks'
 import socket from '../services/socket'
@@ -34,7 +33,6 @@ export default {
         UserSearch,
         Kudos,
         Tasks,
-        Notifications,
     },
     props: {
         kudosCount: {

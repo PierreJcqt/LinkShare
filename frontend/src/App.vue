@@ -14,7 +14,6 @@
                 />
             </router-link>
         </div>
-        <NotificationAlert />
         <transition name="fade" mode="out-in">
             <router-view />
         </transition>
@@ -22,12 +21,10 @@
 </template>
 
 <script>
-import NotificationAlert from '../src/components/NotificationAlert'
 
 export default {
     name: 'App',
     components: {
-        NotificationAlert,
     },
 }
 </script>

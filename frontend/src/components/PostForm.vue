@@ -81,9 +81,7 @@
 </template>
 
 <script>
-// import { apiClient } from '../services/ApiClient'
 import ProfileImage from './ProfileImage'
-import socket from '../services/socket'
 export default {
     name: 'PostForm',
     components: {
