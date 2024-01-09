@@ -1,9 +1,6 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
-const auth = require('./middleware/auth');
-const { Sequelize } = require('./models/index');
 const cors = require('cors');
 const { RateLimiterMemory } = require('rate-limiter-flexible');
 const { User } = require('./models');
