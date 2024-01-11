@@ -29,8 +29,7 @@ router.get('/:postId/likes', auth, likeCtrl.getAllLikesOfOnePost);
 router.get('/kudos', auth, kudosCtrl.getAllKudos);
 router.get('/kudos/:id', auth, kudosCtrl.getOneKudo);
 router.post('/kudos', auth, kudosCtrl.createKudo);
-router.delete('/kudos/:id', auth, kudosCtrl.deleteKudo);
-router.get('/kudos/received/:usersId', auth, kudosCtrl.getReceivedKudos);
-
+router.get('/kudos/:usersId/received-kudos', auth, kudosCtrl.getReceivedKudos);
+router.delete('/kudos/:kudoId/:recipientId', auth, kudosCtrl.deleteKudo);
 
 module.exports = router;

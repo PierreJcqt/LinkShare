@@ -10,7 +10,7 @@
                     <button
                         class="btn btn-danger btn-sm rounded-circle"
                         title="Supprimer le kudo"
-                        @click="deleteKudo(kudo.id)"
+                        @click="deleteKudo(kudo.id, kudo.recipientId)"
                     >
                         X
                     </button>
@@ -98,9 +98,9 @@ export default {
                 this.isLoading = false
             }
         },
-        async deleteKudo(kudoId) {
+        async deleteKudo(kudoId, recipientId) {
             try {
-                await apiClient.delete(`/api/posts/kudos/${kudoId}`)
+                await apiClient.delete(`/api/posts/kudos/${kudoId}/${recipientId}`);
                 const kudoIndex = this.receivedKudos.findIndex(
                     (k) => k.id === kudoId
                 )
@@ -109,23 +109,19 @@ export default {
                 }
                 this.$toast.success('Kudo supprimé avec succès !')
             } catch (error) {
-                alert('Impossible de supprimer le kudo')
+                this.$toast.error('Impossible de supprimer le kudo !');
             }
         },
         async fetchReceivedKudos() {
             try {
                 const userId = localStorage.getItem('userId')
-                const response = await apiClient.get(
-                    `/api/posts/kudos/received/${userId}`
-                )
-                this.receivedKudos = response
+                const response = await apiClient.get(`/api/posts/kudos/${userId}/received-kudos`);
+                this.receivedKudos = response;
             } catch (error) {
             } finally {
                 this.isLoading = false
             }
         },
-
-
         async sendKudo() {
             if (!this.isFormValid()) {
                 this.triedToSubmit = true; 
@@ -135,21 +131,18 @@ export default {
             try {
                 const { recipients, message } = this.newKudo 
                 const senderId = localStorage.getItem('userId');
-                const createdAt = new Date().toISOString(); 
-                for (const recipient of recipients) {
                     const body = {
                         senderId,
-                        recipients: [recipient],
+                        recipients,
                         message,
-                        createdAt
                     };
-                    await apiClient.post('/api/posts/kudos', body);
-                }
+                await apiClient.post('/api/posts/kudos', body);
                 this.$toast.success(`Kudo envoyé avec succès`);
                 this.resetForm();
-                this.newKudo = { recipients: [], message: '' }; 
                 this.triedToSubmit = false; 
+                await this.fetchReceivedKudos();
                 } catch (error) {
+                    console.error('Error sending kudo:', error);
                     this.$toast.error("Erreur lors de l'envoi du kudo.");
                 }
         },
@@ -165,9 +158,6 @@ export default {
             this.isDestinatairesValid = false;
             this.triedToSubmit = false; 
         },
-
-
-        
         getSenderName(senderId) {
             const sender = this.users.find((user) => user.id === senderId)
             return sender ? `${sender.firstName} ${sender.lastName}` : 'Inconnu'

@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
   class Kudo extends Model {
     static associate (models) {
       Kudo.belongsTo(models.User, { as: 'Sender', foreignKey: 'senderId' })
-      Kudo.belongsTo(models.User, { as: 'Recipient', foreignKey: 'recipientId' })
     }
 
     readableCreatedAt () {
@@ -19,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
   Kudo.init(
     {
       senderId: DataTypes.INTEGER,
-      recipientId: DataTypes.INTEGER,
       message: DataTypes.TEXT,
     },
     {
