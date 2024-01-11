@@ -142,7 +142,6 @@ export default {
                 this.triedToSubmit = false; 
                 await this.fetchReceivedKudos();
                 } catch (error) {
-                    console.error('Error sending kudo:', error);
                     this.$toast.error("Erreur lors de l'envoi du kudo.");
                 }
         },

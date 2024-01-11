@@ -38,22 +38,17 @@ exports.getReceivedKudos = async (req, res) => {
 exports.createKudo = async (req, res) => {
   try {
     const { senderId, recipients, message } = req.body;
-
     if (!senderId || !recipients || recipients.length === 0 || !message) {
       return res.status(400).json({ error: 'Les destinataires et le message sont obligatoires' });
     }
-
     // Créer un kudo avec l'ID de l'utilisateur authentifié et la date de création gérée automatiquement par Sequelize
     const kudo = await Kudo.create({ senderId, message });
-
     // Créer des associations de réception pour chaque destinataire
     const receiveEntries = recipients.map(recipientId => {
       return { recipientId, kudoId: kudo.id };
     });
     const createdReceives = await Receive.bulkCreate(receiveEntries);
-
     res.status(201).json({ kudo, createdReceives });
-
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -64,18 +59,14 @@ exports.createKudo = async (req, res) => {
 exports.deleteKudo = async (req, res) => {
   try {
     const { kudoId, recipientId } = req.params; // Ajoutez recipientId dans les paramètres
-
     // Supprimez uniquement l'association entre le kudo et l'utilisateur
     await Receive.destroy({ where: { kudoId, recipientId } });
-
     // Vérifiez s'il y a d'autres associations pour ce kudo
     const remainingReceives = await Receive.count({ where: { kudoId } });
-
     // Si plus aucune association, supprimez le kudo lui-même
     if (remainingReceives === 0) {
       await Kudo.destroy({ where: { id: kudoId } });
     }
-
     res.status(204).json();
   } catch (error) {
     res.status(400).json({ error: error.message });
