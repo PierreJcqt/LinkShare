@@ -21,35 +21,32 @@ const rateLimiter = new RateLimiterMemory({
 
 // Middleware pour vérifier le nombre de tentatives de connexion
 const rateLimiterMiddleware = async (req, res, next) => {
-    const identifier = req.body.email; // Utilisez l'adresse e-mail comme identifiant unique
-
+    const identifier = req.body.email; 
     try {
+        // Vérifiez si l'utilisateur existe
+        const user = await User.findOne({ where: { email: identifier } });
+        if (!user) {
+            throw new Error('Utilisateur introuvable');
+        }
+        // Récupérez les informations du limiteur de taux pour cet utilisateur
         const rateLimiterRes = await rateLimiter.get(identifier);
-
         // Si l'utilisateur a déjà été bloqué
         if (rateLimiterRes !== null && rateLimiterRes.consumedPoints >= 3) {
             throw new Error('Trop de tentatives de connexion. Veuillez réessayer dans 15 minutes.');
         }
-
         // Vérifiez le mot de passe
-        const user = await User.findOne({ where: { email: identifier } });
-
-        if (!user || !(await checkPassword(req.body.password, user.password))) {
+        if (!(await checkPassword(req.body.password, user.password))) {
             await rateLimiter.consume(identifier);
             throw new Error('Mot de passe incorrect');
         }
-
         // Réinitialisez les points de l'utilisateur après une connexion réussie
         await rateLimiter.delete(identifier);
         next();
     } catch (error) {
-        if (error.message === 'Mot de passe incorrect') {
-            res.status(401).json({ error: error.message });
-        } else {
-            res.status(429).json({ error: 'Trop de tentatives de connexion. Veuillez réessayer dans 15 minutes.' });
-        }
+        res.status(error.message === 'Utilisateur introuvable' ? 404 : 401).json({ error: error.message });
     }
 };
+
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
