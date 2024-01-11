@@ -32,7 +32,7 @@ const rateLimiterMiddleware = async (req, res, next) => {
         const rateLimiterRes = await rateLimiter.get(identifier);
         // Si l'utilisateur a déjà été bloqué
         if (rateLimiterRes !== null && rateLimiterRes.consumedPoints >= 3) {
-            throw new Error('Trop de tentatives de connexion. Veuillez réessayer dans 15 minutes.');
+            throw new Error('Votre compte a été bloqué suite à trop de tentatives de connexion infructueuses. Veuillez réessayer dans 15 minutes.');
         }
         // Vérifiez le mot de passe
         if (!(await checkPassword(req.body.password, user.password))) {
