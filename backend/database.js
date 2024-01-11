@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const path = 'mariadb://root:password@localhost:3306/linksharetwo';
+const path = 'mariadb://root:password@localhost:3306/linkshare';
 const sequelize = new Sequelize(path);
 
 sequelize.authenticate().then(() => {
