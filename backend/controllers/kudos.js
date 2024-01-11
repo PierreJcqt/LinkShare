@@ -3,64 +3,6 @@ const db = require('../models');
 const { Kudo } = db.sequelize.models;
 const { Receive } = db.sequelize.models;
 
-
-// Récupérer tous les kudos pour un utilisateur spécifique
-exports.getAllKudos = async (req, res) => {
-  try {
-    // Supposons que userId est défini quelque part dans votre contexte, peut-être à partir de req.userId ou un paramètre similaire.
-    const userId = req.userId; // ou la manière dont vous obtenez l'ID de l'utilisateur
-
-    const receivedKudos = await Receive.findAll({
-      where: { recipientId: userId },
-      include: [{
-        model: Kudo,
-        include: [
-          { model: User, as: 'Sender', attributes: ['id', 'firstName', 'lastName'] }
-        ]
-      }],
-      order: [[Kudo, 'createdAt', 'DESC']]
-    });
-
-    res.status(200).json(receivedKudos);
-  } catch (error) {
-    console.error("ERROR FROM GetALLKudo")
-    res.status(400).json({ error: error.message });
-  }
-};
-
-// Récupérer un kudo par ID
-exports.getOneKudo = async (req, res) => {
-  try {
-    const kudoId = req.params.id;
-    
-    // Trouvez d'abord le kudo
-    const kudo = await Kudo.findByPk(kudoId, {
-      include: [{ model: User, as: 'Sender', attributes: ['id', 'firstName', 'lastName'] }]
-    });
-
-    if (!kudo) {
-      return res.status(404).json({ error: 'Kudo introuvable' });
-    }
-
-    // Trouvez tous les Receives associés à ce kudo
-    const receives = await Receive.findAll({
-      where: { kudoId: kudo.id },
-      include: [{ model: User, as: 'Recipient', attributes: ['id', 'firstName', 'lastName'] }]
-    });
-
-    // Combinez les données kudo et receives pour la réponse
-    const kudoWithRecipients = {
-      ...kudo.toJSON(),
-      Recipients: receives.map(receive => receive.Recipient)
-    };
-
-    res.status(200).json(kudoWithRecipients);
-  } catch (error) {
-    console.error("ERROR FROM GetOneKudo")
-    res.status(400).json({ error: error.message });
-  }
-};
-
 exports.getReceivedKudos = async (req, res) => {
   try {
     const userId = req.params.usersId;
