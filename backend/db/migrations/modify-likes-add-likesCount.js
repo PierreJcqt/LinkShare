@@ -2,14 +2,15 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    queryInterface.addColumn('Posts', 'likesCount', {
-      type: Sequelize.INTEGER
-    })
+    const tableDescription = await queryInterface.describeTable('Posts');
+    if (!tableDescription.likesCount) {
+      await queryInterface.addColumn('Posts', 'likesCount', {
+        type: Sequelize.INTEGER
+      });
+    }
   },
 
   down: async (queryInterface, Sequelize) => {
-    queryInterface.removeColumn('Posts', 'likesCount', {
-      type: Sequelize.STRING
-    })
+    await queryInterface.removeColumn('Posts', 'likesCount');
   }
 }
