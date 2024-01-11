@@ -131,11 +131,11 @@ export default {
             try {
                 const { recipients, message } = this.newKudo 
                 const senderId = localStorage.getItem('userId');
-                    const body = {
-                        senderId,
-                        recipients,
-                        message,
-                    };
+                const body = {
+                    senderId,
+                    recipients,
+                    message,
+                };
                 await apiClient.post('/api/posts/kudos', body);
                 this.$toast.success(`Kudo envoyé avec succès`);
                 this.resetForm();
