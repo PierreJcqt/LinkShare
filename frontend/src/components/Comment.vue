@@ -108,7 +108,7 @@ export default {
             if (moment(date).isSame(now, 'day')) {
                 return `Aujourd'hui à ${commentDate.format('HH:mm')}`;
             }
-            return commentDate.format('YYYY-MM-DD');
+            return commentDate.format('DD-MM-YYYY à HH:mm');
         },
     },
 }
