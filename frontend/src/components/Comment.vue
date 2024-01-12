@@ -2,9 +2,8 @@
     <div>
         <div class="d-flex align-items-center position-relative">
             <router-link
-                :to="{ name: 'UserProfile', params: { userId: comment.User } }"
+                :to="{ name: 'UserProfile', params: { userId: comment.User.id } }"
                 ><div class="d-flex text-center mr-2 mt-2">
-                    <!-- rajouter .id après .User ligne 5 et 15 si fail -->
                     <ProfileImage
                         :src="comment.User.imageUrl"
                         customClass="comment-profile-picture"
@@ -15,7 +14,7 @@
                 <router-link
                     :to="{
                         name: 'UserProfile',
-                        params: { userId: comment.User },
+                        params: { userId: comment.User.id },
                     }"
                     ><p class="mb-0 font-weight-bold">
                         {{ comment.User.firstName }} {{ comment.User.lastName }}

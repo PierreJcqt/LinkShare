@@ -23,7 +23,6 @@
 import ProfileButton from '../components/ProfileButton'
 import UserSearch from '../components/UserSearch'
 import Kudos from '../components/Kudos'
-import Tasks from '../components/Tasks'
 import socket from '../services/socket'
 
 export default {
@@ -32,7 +31,6 @@ export default {
         ProfileButton,
         UserSearch,
         Kudos,
-        Tasks,
     },
     props: {
         kudosCount: {

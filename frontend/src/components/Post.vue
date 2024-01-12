@@ -11,7 +11,6 @@
                             params: { userId: post.User.id },
                         }"
                     >
-                        <!-- rajouter .id après le User (ligne 9 et 19) si fail -->
                         <ProfileImage
                             :src="post.User.imageUrl"
                             customClass="post-profile-picture"

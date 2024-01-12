@@ -107,6 +107,7 @@ export default {
                             this.$toast.success(
                                 "Bienvenue sur LinkShare, votre réseau social d'entreprise !"
                             )
+                            // this.checkForNewKudos();
                             router.push({ name: 'Posts' })
                         }
                     })
@@ -133,6 +134,20 @@ export default {
                     'Veuillez renseigner un email et un mot de passe'
             }
         },
+        // async checkForNewKudos() {
+        //     try {
+        //         const userId = localStorage.getItem('userId');
+        //         const response = await apiClient.get(`/api/posts/kudos/${userId}/received-kudos`);
+        //         if (response && response.length === 1) {
+        //             this.$toast.info(`Vous avez reçu ${response.length} nouveau kudo !`);
+        //         } 
+        //         else if (response && response.length > 1) {
+        //             this.$toast.info(`Vous avez reçu ${response.length} nouveaux kudos !`);
+        //         }
+        //     } catch (error) {
+        //         console.error("Erreur lors de la vérification des nouveaux kudos :", error);
+        //     }
+        // }
     },
 }
 </script>
