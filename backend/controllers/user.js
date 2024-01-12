@@ -170,5 +170,5 @@ exports.deleteUserAccount = (req, res, next) => {
         }
     })
     .catch(error => res.status(500).json({ error: '⚠ Oops, une erreur s\'est produite !' }));
-    };
+};
 

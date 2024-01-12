@@ -156,17 +156,15 @@ export default {
     },
     methods: {
         async likeOrUnlikePost() {
-            const res = await apiClient.post(
-                `/api/posts/${this.post.id}/likes/`
-            )
+            const res = await apiClient.post(`/api/posts/${this.post.id}/likes/`)
             if (res.like !== this.likesThisPost) {
                 this.likesCount += res.like ? 1 : -1
             }
             this.likesThisPost = res.like
-        },
-        focusInput() {
-            document.getElementById(`comment-area-${this.post.id}`).focus()
-        },
+            },
+            focusInput() {
+                document.getElementById(`comment-area-${this.post.id}`).focus()
+            },
     },
 }
 </script>

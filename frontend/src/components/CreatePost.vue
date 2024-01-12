@@ -34,10 +34,8 @@ export default {
         async onEnterKeyPress() {
             // Vérifiez si le contenu est vide ou s'il y a un fichier sélectionné
             if (!this.content.trim().length && !this.selectedFile) return
-
             // Appeler la méthode onSubmit
             await this.onSubmit()
-
             // Réinitialiser le formulaire
             this.resetForm()
         },

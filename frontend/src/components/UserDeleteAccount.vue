@@ -19,11 +19,11 @@ export default {
     },
     methods: {
         async confirmDeletion() {
-            await apiClient.delete(`/api/auth/users/${this.userData.id}`)
-            localStorage.clear()
-            this.$router.push({
-                path: '/login?deletedAccount=true',
-            })
+                            await apiClient.delete(`/api/auth/users/${this.userData.id}`)
+                localStorage.clear()
+                this.$router.push({
+                    path: '/login?deletedAccount=true',
+                })
         },
     },
 }
