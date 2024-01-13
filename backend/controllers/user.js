@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { User } = require ('../models/index');
 const { checkPassword } = require('../middleware/password');
+const { Op } = require('sequelize');
 
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/;
@@ -40,12 +41,13 @@ exports.signup = (req, res, next) => {
 
   // Permet de vérifier que l'utilisateur que l'on souhaite créer n'existe pas déjà
     User.findOne({
-        attributes: ['firstName' || 'lastName' || 'email' || 'role'],
-        where: { 
-            firstName: req.body.firstName, 
-            lastName: req.body.lastName,
-            email: req.body.email,
-            role: req.body.role
+        where: {
+            [Op.or]: [
+                { firstName: req.body.firstName },
+                { lastName: req.body.lastName },
+                { email: req.body.email },
+                { role: req.body.role }
+            ]
         }
     })
     .then(userExist => {
